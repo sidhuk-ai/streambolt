@@ -19,9 +19,10 @@ import {
   DropdownMenuTrigger,DropdownMenuShortcut
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Skeleton } from "./ui/skeleton";
 
 export default function Navbar() {
-  const { data: session } = useSession();
+  const { data: session,status } = useSession();
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 items-center mx-3 space-x-4 sm:justify-between sm:space-x-0 md:gap-4">
@@ -53,69 +54,75 @@ export default function Navbar() {
             <ModeToggle />
           </div>
           <div className="flex items-center space-x-2">
-            {session?.user ? (
-              <>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                      <Avatar>
-                        <AvatarImage src={session.user.image ?? ""} alt={session.user.name ?? ""}/>
-                        <AvatarFallback>{session.user.name?.slice(0,2)}</AvatarFallback>
-                      </Avatar>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="rounded-lg min-w-56 m-1">
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuGroup>
-                      <Link href={'/dashboard'}>
-                        <DropdownMenuItem className="w-full">
-                          <UserPen />
-                          <span className="font-medium pb-0.5">Profile</span>
+            {status === "loading" ? 
+            <>
+              <Skeleton className="w-9 h-9 rounded-full text-muted-foreground"/>
+            </>
+            :
+              session?.user ? (
+                <>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Avatar className="w-9 h-9">
+                          <AvatarImage src={session.user.image ?? ""} alt={session.user.name ?? ""}/>
+                          <AvatarFallback>{session.user.name?.slice(0,2)}</AvatarFallback>
+                        </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="rounded-lg min-w-56 m-1">
+                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuGroup>
+                        <Link href={'/dashboard'}>
+                          <DropdownMenuItem className="w-full">
+                            <UserPen />
+                            <span className="font-medium pb-0.5">Profile</span>
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link href={'/dashboard/my-streams'}>
+                          <DropdownMenuItem className="w-full">
+                            <Clapperboard />
+                            <span className="font-medium pb-0.5">Your Streams</span>
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link href={'/dashboard/analytics'}>
+                          <DropdownMenuItem className="w-full">
+                            <ChartNoAxesCombined />
+                            <span className="font-medium pb-0.5">Analytics</span>
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link href={'/dashboard/settings'}>
+                          <DropdownMenuItem className="w-full">
+                            <Settings />
+                            <span className="font-medium pb-0.5">Settings</span>
+                          </DropdownMenuItem>
+                        </Link>
+                        <DropdownMenuItem onClick={()=>signOut({redirectTo: '/'})} >
+                          <LogOut />
+                          <span className="font-medium pb-0.5" >Log Out</span>
                         </DropdownMenuItem>
-                      </Link>
-                      <Link href={'/dashboard/my-streams'}>
-                        <DropdownMenuItem className="w-full">
-                          <Clapperboard />
-                          <span className="font-medium pb-0.5">Your Streams</span>
-                        </DropdownMenuItem>
-                      </Link>
-                      <Link href={'/dashboard/analytics'}>
-                        <DropdownMenuItem className="w-full">
-                          <ChartNoAxesCombined />
-                          <span className="font-medium pb-0.5">Analytics</span>
-                        </DropdownMenuItem>
-                      </Link>
-                      <Link href={'/dashboard/settings'}>
-                        <DropdownMenuItem className="w-full">
-                          <Settings />
-                          <span className="font-medium pb-0.5">Settings</span>
-                        </DropdownMenuItem>
-                      </Link>
-                      <DropdownMenuItem onClick={()=>signOut({redirectTo: '/'})} >
-                        <LogOut />
-                        <span className="font-medium pb-0.5" >Log Out</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
-            ) : (
-              <>
-                <Link href={"/login"}>
-                  <Button
-                    variant={"outline"}
-                    size="sm"
-                    className="cursor-pointer hidden md:flex"
-                  >
-                    Log in
-                  </Button>
-                </Link>
-                <Link href={"/register"}>
-                  <Button size="sm" className="cursor-pointer hidden md:flex">
-                    Sign up
-                  </Button>
-                </Link>
-              </>
-            )}
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </>
+              ) : (
+                <>
+                  <Link href={"/login"}>
+                    <Button
+                      variant={"outline"}
+                      size="sm"
+                      className="cursor-pointer hidden md:flex"
+                    >
+                      Log in
+                    </Button>
+                  </Link>
+                  <Link href={"/register"}>
+                    <Button size="sm" className="cursor-pointer hidden md:flex">
+                      Sign up
+                    </Button>
+                  </Link>
+                </>
+              )
+            }
           </div>
         </div>
       </div>
