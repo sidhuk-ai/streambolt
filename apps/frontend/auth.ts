@@ -18,7 +18,7 @@ export const config:NextAuthConfig = {
           const user = await prisma.user.findUnique({ where: { email } });
           if (!user) throw new Error("User not found. Try Signing Up...");
 
-          const matchPassword = await bcrypt.compare(password, user.password);
+          const matchPassword = await bcrypt.compare(password, user.password as string);
           if (!matchPassword) throw new Error("Password incorrect. Try Again.");
 
           return {
