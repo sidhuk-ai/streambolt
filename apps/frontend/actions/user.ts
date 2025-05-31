@@ -1,6 +1,6 @@
 "use server"
 
-import { signIn } from "@/auth"
+import { auth,signIn } from "@/auth"
 import { redirect } from "next/navigation"
 import {prisma} from "@repo/db"
 import {hash} from "bcryptjs"
@@ -44,4 +44,41 @@ export const login = async (formData:FormData) => {
         password:password,
         redirectTo:'/dashboard'
     });
+}
+
+export const getSelf = async () => {
+    try {
+        const session = await auth();
+
+        if(!session?.user) return null;
+
+        const user = await prisma.user.findUnique({
+            where:{
+                id: session?.user?.id
+            }
+        })
+
+        return user
+    } catch (error) {
+        console.log(error)
+        return null;
+    }
+}
+
+export const getAllCreators = async () => {
+    try {
+        const self = await getSelf();
+        const someCreators = await prisma.user.findMany({
+            where:{
+                NOT:{
+                    id: self?.id
+                }
+            },
+            take:5
+        })
+        return someCreators;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }
