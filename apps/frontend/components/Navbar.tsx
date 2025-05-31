@@ -69,7 +69,7 @@ export default function Navbar() {
           <div className="relative hidden w-full max-w-sm md:flex">
             <SearchBar url="/search" />
           </div>
-          <div className="theme-toggle hidden md:flex">
+          <div className="theme-toggle md:flex">
             <ModeToggle />
           </div>
           <div className="flex items-center space-x-2">
