@@ -1,6 +1,6 @@
 "use client"
 
-import { type LucideIcon } from "lucide-react"
+import { LayoutGrid, Settings2, TvMinimalPlay, UserCheck, type LucideIcon } from "lucide-react"
 
 import {
   SidebarGroup,
@@ -11,16 +11,30 @@ import {
 } from "@/components/ui/sidebar"
 import Link from "next/link"
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string
-    url: string
-    icon?: LucideIcon
-    isActive?: boolean
-  }[]
-}) {
+export function NavMain() {
+  const items = [
+    {
+      title: "Categories",
+      url: "/categories",
+      icon: LayoutGrid,
+      isActive: true
+    },
+    {
+      title: "Feed",
+      url: "/browse",
+      icon: TvMinimalPlay
+    },
+    {
+      title: "Following",
+      url: "/following",
+      icon: UserCheck
+    },
+    {
+      title: "Settings",
+      url: "/dashboard/settings",
+      icon: Settings2
+    },
+  ]
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
