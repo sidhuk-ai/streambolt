@@ -6,6 +6,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import Navbar from "@/components/Navbar"
 import { SessionProvider } from "next-auth/react";
+import {Toaster} from "sonner"
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -32,6 +33,7 @@ export default function RootLayout({
         <SessionProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navbar />
+            <Toaster position="bottom-center" theme="light" />
             <SidebarProvider defaultOpen={false}>
               <AppSidebar />
               <SidebarInset>
