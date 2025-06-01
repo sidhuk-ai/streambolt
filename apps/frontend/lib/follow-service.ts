@@ -96,3 +96,24 @@ export const unfollowUser = async (id:string) => {
 
     return unfollow;
 }
+
+export const getFollowedCreators = async () => {
+    try {
+        const self = await getSelf();
+        if(!self) return [];
+
+        const followingList = await prisma.follow.findMany({
+            where:{
+                followerId: self.id
+            },
+            include:{
+                following: true,
+                follower: false
+            }
+        })
+
+        return followingList;
+    } catch (error) {
+        return [];
+    }
+}
