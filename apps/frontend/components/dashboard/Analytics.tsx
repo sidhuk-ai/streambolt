@@ -9,10 +9,10 @@ export default function Analytics() {
 
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="audience">Audience</TabsTrigger>
-          <TabsTrigger value="content">Content</TabsTrigger>
-          <TabsTrigger value="revenue">Revenue</TabsTrigger>
+          <TabsTrigger value="overview" className="cursor-pointer">Overview</TabsTrigger>
+          <TabsTrigger value="audience" className="cursor-pointer">Audience</TabsTrigger>
+          <TabsTrigger value="content" className="cursor-pointer">Content</TabsTrigger>
+          <TabsTrigger value="revenue" className="cursor-pointer">Revenue</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-4">

@@ -21,10 +21,10 @@ export default function Settings() {
 
       <Tabs defaultValue="profile" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="profile">Profile</TabsTrigger>
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="notifications">Notifications</TabsTrigger>
-          <TabsTrigger value="stream">Stream Settings</TabsTrigger>
+          <TabsTrigger value="profile" className="cursor-pointer">Profile</TabsTrigger>
+          <TabsTrigger value="account" className="cursor-pointer">Account</TabsTrigger>
+          <TabsTrigger value="notifications" className="cursor-pointer">Notifications</TabsTrigger>
+          <TabsTrigger value="stream" className="cursor-pointer">Stream Settings</TabsTrigger>
         </TabsList>
 
         <TabsContent value="profile" className="space-y-4">
@@ -81,7 +81,7 @@ function ProfileSettings({session}:{session:Session | null}) {
           </div>
           <div className="space-y-2">
             <Label htmlFor="username">Username</Label>
-            <Input id="username" defaultValue={"streamuser_"+session?.user?.id?.slice(0,4)} />
+            <Input id="username" defaultValue={"streamuser_"+session?.user?.id?.slice(-4)} />
           </div>
         </div>
 

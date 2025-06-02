@@ -17,10 +17,10 @@ export default function LiveStreams() {
           </div>
           <Tabs defaultValue="all" className="w-full max-w-md">
             <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="all">All</TabsTrigger>
-              <TabsTrigger value="gaming">Gaming</TabsTrigger>
-              <TabsTrigger value="music">Music</TabsTrigger>
-              <TabsTrigger value="irl">IRL</TabsTrigger>
+              <TabsTrigger value="all" className="cursor-pointer">All</TabsTrigger>
+              <TabsTrigger value="gaming" className="cursor-pointer">Gaming</TabsTrigger>
+              <TabsTrigger value="music" className="cursor-pointer">Music</TabsTrigger>
+              <TabsTrigger value="irl" className="cursor-pointer">IRL</TabsTrigger>
             </TabsList>
           </Tabs>
         </div>
