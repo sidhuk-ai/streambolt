@@ -1,6 +1,6 @@
 "use server"
 
-import { handleFollow, unfollowUser } from "@/lib/follow-service"
+import { getFollowingCreators, handleFollow, unfollowUser } from "@/lib/follow-service"
 import { revalidatePath } from "next/cache"
 
 export const onFollow = async (id:string) => {
@@ -32,5 +32,14 @@ export const onUnfollow =  async (id:string) => {
         return unfollowed
     } catch (error) {
         throw new Error("Internal error.");
+    }
+}
+
+export const getFollowedCreators = async () => {
+    try {
+        const creators = await getFollowingCreators();
+        return creators;
+    } catch (error) {
+        return [];
     }
 }

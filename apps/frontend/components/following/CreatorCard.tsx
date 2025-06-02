@@ -1,6 +1,7 @@
 import Link from "next/link"
-import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
+import { Avatar } from "@radix-ui/react-avatar"
+import { AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface CreatorCardProps {
   creator: {
@@ -13,22 +14,26 @@ interface CreatorCardProps {
 }
 
 export default function CreatorCard({ creator }: CreatorCardProps) {
-  const { username, isLive, avatar, category } = creator
+  const { username, isLive, avatar, category, id } = creator
 
   return (
-    <Link href="#" className="group flex-shrink-0">
+    <Link href={`/creator/${id}`} className="group flex-shrink-0">
       <div className="flex flex-col items-center w-28">
         <div className="relative mb-2">
           <div
             className={`relative h-20 w-20 rounded-full overflow-hidden border-2 ${isLive ? "border-red-500" : "border-transparent"}`}
           >
-            <Image
+            {/* <Image
               src={avatar || "/placeholder.svg"}
               width={200}
               height={200}
               alt={username}
               className="h-full w-full object-cover transition-transform group-hover:scale-105"
-            />
+            /> */}
+            <Avatar>
+              <AvatarImage src={avatar || "/placeholder.svg"} width={200} height={200} alt={username} className="h-full w-full object-cover transition-transform group-hover:scale-105" />
+              <AvatarFallback>{username.slice(0,2)}</AvatarFallback>
+            </Avatar>
           </div>
           {isLive && (
             <Badge

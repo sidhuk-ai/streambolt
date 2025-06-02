@@ -82,3 +82,13 @@ export const getAllCreators = async () => {
         return null;
     }
 }
+
+export const getUserById = async (id:string) => {
+    const user = await prisma.user.findUnique({
+        where:{id}
+    });
+
+    if(!user) throw new Error("User Doesn't Exists.");
+
+    return user;
+}
