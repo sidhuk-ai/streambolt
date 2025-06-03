@@ -5,24 +5,11 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import CreatorCard from "@/components/following/CreatorCard"
 import { getFollowedCreators } from "@/actions/follow"
-import { Skeleton } from "../ui/skeleton"
+import { Skeleton } from "@/components/ui/skeleton"
+import { User,Follow } from "@repo/db"
 
-interface Creator {
-  id: string;
-  createdAt: Date;
-  followerId: string;
-  followingId: string;
-  following: {
-    name: string | null;
-    id: string;
-    username: string | null;
-    email: string;
-    emailVerified: Date | null;
-    password: string | null;
-    imageUrl: string | null;
-    createdAt: Date;
-    updatedAt: Date;
-  }
+interface Creator extends Follow {
+  following: User
 }
 
 export default function CreatorCarousel() {
