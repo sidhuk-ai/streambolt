@@ -139,6 +139,13 @@ exports.Prisma.FollowScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.BlockScalarFieldEnum = {
+  id: 'id',
+  blockerId: 'blockerId',
+  blockedId: 'blockedId',
+  blockedAt: 'blockedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -157,7 +164,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Follow: 'Follow'
+  Follow: 'Follow',
+  Block: 'Block'
 };
 
 /**
