@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const UnauthenticatedPage = () => {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen px-6 text-center bg-background text-foreground">
+    <main className="flex flex-col items-center justify-center h-4/5 px-6 text-center bg-background text-foreground">
       <Image
         src="/un_authenticated.png"
         alt="Unauthenticated illustration"
