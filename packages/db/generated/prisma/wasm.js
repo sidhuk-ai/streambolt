@@ -132,6 +132,22 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.StreamScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  thumbnailUrl: 'thumbnailUrl',
+  ingressId: 'ingressId',
+  streamKey: 'streamKey',
+  serverUrl: 'serverUrl',
+  isLive: 'isLive',
+  isChatEnabled: 'isChatEnabled',
+  isChatDelayed: 'isChatDelayed',
+  isChatFollowersOnly: 'isChatFollowersOnly',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.FollowScalarFieldEnum = {
   id: 'id',
   followerId: 'followerId',
@@ -164,6 +180,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Stream: 'Stream',
   Follow: 'Follow',
   Block: 'Block'
 };
