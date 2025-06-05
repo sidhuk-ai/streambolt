@@ -10,21 +10,10 @@ import {
 } from "@/components/ui/sidebar"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link";
-
-interface Creator{
-  name: string | null;
-  id: string;
-  username: string | null;
-  email: string;
-  emailVerified: Date | null;
-  password: string | null;
-  imageUrl: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { User } from "@repo/db";
 
 interface CreatorProps{
-  creators: Creator[]
+  creators: User[]
 }
 
 export function LiveCreators({creators}:CreatorProps) {

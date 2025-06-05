@@ -1,35 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import { CheckCircle2, Calendar, UserCheck, UserPlus } from "lucide-react";
+import { Calendar, UserCheck, UserPlus, MoreVertical, Ban, Verified } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { onFollow, onUnfollow } from "@/actions/follow";
 import { toast } from "sonner";
 import { useTransition } from "react";
-import { Button } from "../ui/button";
-
-interface Creator {
-  id: string;
-  name: string | null;
-  username: string | null;
-  email: string;
-  emailVerified: Date | null;
-  password: string | null;
-  imageUrl: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { Button } from "@/components/ui/button";
+import { User } from "@repo/db";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { onBlock, onUnblock } from "@/actions/block";
 
 interface CreatorHeaderProps {
-  creator: Creator;
+  creator: User;
   isFollowing: boolean;
+  isBlocked: boolean;
   creatorId: string;
 }
 
 export function CreatorHeader({
   creator,
   isFollowing,
+  isBlocked,
   creatorId,
 }: CreatorHeaderProps) {
 
@@ -50,6 +43,39 @@ export function CreatorHeader({
     }
   };
 
+  const handleBlockClick = () => {
+    if(isBlocked){
+      handleUnblock();
+    }else{
+      handleBlock();
+    }
+  };
+
+  const handleBlock = () => {
+    startTransistion(() => {
+      onBlock(creatorId)
+        .then((data) => {
+          toast.info(`You blocked ${data.blocked.name}.`)
+        })
+        .catch((err) => {
+          console.log(err)
+          toast.error(`${err}`)
+        })
+    })
+  }
+
+  const handleUnblock = () => {
+    startTransistion(() => {
+      onUnblock(creatorId)
+        .then((data) => {
+          toast.success(`You unblocked ${data.blocked.name}.`)
+        })
+        .catch((err) => {
+          toast.error(`${err}.`)
+        })
+    })
+  }
+
   const handleFollow = () => {
     startTransistion(() => {
       onFollow(creatorId)
@@ -57,7 +83,7 @@ export function CreatorHeader({
           toast.success(`You started following ${data.following.name}`);
         })
         .catch((er) => {
-          toast.error("Something went wrong.");
+          toast.error(`${er}`);
         });
     });
   };
@@ -69,7 +95,7 @@ export function CreatorHeader({
           toast.success(`You un-followed ${data.following.name}`);
         })
         .catch((er) => {
-          toast.error("Something went wrong.");
+          toast.error(`${er}`);
         });
     });
   };
@@ -115,7 +141,7 @@ export function CreatorHeader({
                   <h1 className="text-2xl md:text-3xl font-bold">
                     {creator.name}
                   </h1>
-                  <CheckCircle2 className="h-6 w-6 text-blue-500" />
+                  <Verified className="h-6 w-6 text-blue-00" />
                 </div>
                 <p className="text-lg text-muted-foreground">
                   @streamer-{creator.id.slice(-4)}
@@ -132,7 +158,7 @@ export function CreatorHeader({
               </div>
             </div>
 
-            <div className="flex">
+            <div className="flex gap-4 not-md:justify-between">
               <Button
                 onClick={handleClick}
                 disabled={isPending}
@@ -155,6 +181,20 @@ export function CreatorHeader({
                   </>
                 )}
               </Button>
+              <DropdownMenu>
+                {/* TODO: Add Unblock button also */}
+                <DropdownMenuTrigger asChild>
+                  <Button variant={"ghost"} className="rounded-full">
+                    <MoreVertical className="h-9 w-9" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="p-1 mr-10 mt-1">
+                  <DropdownMenuItem variant="destructive" disabled={isPending} className="flex items-center" onClick={handleBlockClick}>
+                    <Ban />
+                    <span className="font-semibold text-base pb-0.5">Block</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>

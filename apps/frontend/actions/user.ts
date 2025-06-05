@@ -66,21 +66,37 @@ export const getSelf = async () => {
 }
 
 export const getAllCreators = async () => {
-    try {
-        const self = await getSelf();
-        const someCreators = await prisma.user.findMany({
-            where:{
-                NOT:{
-                    id: self?.id
+    const self = await getSelf();
+    const someCreators = await prisma.user.findMany({
+        where:{
+            AND: [
+                {
+                    NOT:{
+                        id: self?.id
+                    }
+                },
+                {
+                    // Hamne jise block kiya hai use hata do
+                    blockedBy: {
+                        none:{
+                            blockerId: self?.id
+                        }
+                    }
+                },
+                {
+                    // Ham logon ko jisne bhi block kiya hai usko bhi hata do
+                    blocking: {
+                        none:{
+                            blockedId: self?.id
+                        }
+                    }
                 }
-            },
-            take:5
-        })
-        return someCreators;
-    } catch (error) {
-        console.log(error);
-        return null;
-    }
+            ],
+            
+        },
+        take:5
+    })
+    return someCreators;
 }
 
 export const getUserById = async (id:string) => {
