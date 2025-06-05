@@ -11,19 +11,21 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link";
 import { User } from "@repo/db";
+import { usePathname } from "next/navigation";
 
 interface CreatorProps{
   creators: User[]
 }
 
 export function LiveCreators({creators}:CreatorProps) {
+  const pathname = usePathname()
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Live Now</SidebarGroupLabel>
       <SidebarMenu>
         {creators.map((creator) => (
           <SidebarMenuItem key={creator.id} className="w-full my-1.5">
-            <SidebarMenuButton tooltip={creator.name as string} asChild>
+            <SidebarMenuButton tooltip={creator.name as string} isActive={pathname===`/creator/${creator.id}`} asChild>
               <Link href={`/creator/${creator.id}`} className="flex items-center gap-3.5 group-data-[collapsible=icon]:pl-0! h-fit">
                 <div className="relative">
                   <Avatar className="h-7 w-7">

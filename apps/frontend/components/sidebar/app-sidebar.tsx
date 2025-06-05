@@ -33,9 +33,6 @@ export async function AppSidebar({
         )}
         <NavMain />
       </SidebarContent>
-      <SidebarFooter>
-          {/* <NavUser /> */}
-      </SidebarFooter>
     </Sidebar>
   );
 }

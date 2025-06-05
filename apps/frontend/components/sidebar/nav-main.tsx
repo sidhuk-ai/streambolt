@@ -1,6 +1,6 @@
 "use client"
 
-import { LayoutGrid, Settings2, TvMinimalPlay, UserCheck, type LucideIcon } from "lucide-react"
+import { LayoutGrid, Settings2, TvMinimalPlay, UserCheck } from "lucide-react"
 
 import {
   SidebarGroup,
@@ -10,6 +10,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 export function NavMain() {
   const items = [
@@ -35,6 +36,7 @@ export function NavMain() {
       icon: Settings2
     },
   ]
+  const pathname = usePathname();
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -42,7 +44,7 @@ export function NavMain() {
         {items.map((item) => (
           <Link href={item.url} key={item.title}>
             <SidebarMenuItem>
-                <SidebarMenuButton tooltip={item.title}>
+                <SidebarMenuButton tooltip={item.title} isActive={pathname===item.url}>
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
                 </SidebarMenuButton>

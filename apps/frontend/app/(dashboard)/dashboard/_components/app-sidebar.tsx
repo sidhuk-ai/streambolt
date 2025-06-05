@@ -20,48 +20,45 @@ import {
 } from "@/components/ui/sidebar"
 import { NavMain } from "./nav-main"
 
-// This is sample data.
 const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: LayoutDashboard,
     },
     {
       title: "Analytics",
-      url: "#",
+      url: "/dashboard/analytics",
       icon: ChartLine,
     },
     {
       title: "Streams",
-      url: "#",
+      url: "/dashboard/my-streams",
       icon: Clapperboard,
-      isActive: true,
     },
     {
       title: "Chats",
-      url: "#",
+      url: "/dashboard/chats",
       icon: MessageSquare,
     },
     {
       title: "Keys",
-      url: "#",
+      url: "/dashboard/keys",
       icon: KeyRound,
     },
     {
       title: "Community",
-      url: "#",
+      url: "/dashboard/community",
       icon: Users,
     },
     {
       title: "Settings",
-      url: "#",
+      url: "/dashboard/settings",
       icon: Settings2,
     },
   ],
-}
-
+};
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -73,5 +70,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

@@ -9,26 +9,30 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from "@/components/ui/sidebar";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function NavMain({
-  items,
+  items
 }: {
   items: {
     title: string;
     url: string;
     icon?: LucideIcon;
-    isActive?: boolean;
   }[];
 }) {
+  const pathname = usePathname();
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu className="gap-5 ">
         {items.map((item,i) => (
           <SidebarMenuItem key={i}>
-            <SidebarMenuButton tooltip={item.title} isActive={item.isActive}>
-              {item.icon && <item.icon />}
-              <span>{item.title}</span>
+            <SidebarMenuButton tooltip={item.title} isActive={pathname===item.url} asChild>
+              <Link href={item.url} className="p-3">
+                {item.icon && <item.icon />}
+                <span>{item.title}</span>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         ))}
