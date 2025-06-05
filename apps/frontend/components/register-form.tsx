@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Eye, EyeOff, ArrowRight } from "lucide-react"
+import { Eye, EyeOff, ArrowRight, ArrowLeft } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,10 +11,12 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { register } from "@/actions/user"
+import { useRouter } from "next/navigation"
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const router = useRouter();
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
@@ -22,6 +24,9 @@ export default function SignUpPage() {
       <div className="flex-1 flex items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center md:text-left">
+            <Button variant={"ghost"} className="rounded-full mr-3 h-10 w-10" onClick={()=>router.back()} >
+              <ArrowLeft className="h-10 w-10" />
+            </Button>
             <Link href="/" className="inline-flex items-center mb-6 text-2xl font-semibold">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
