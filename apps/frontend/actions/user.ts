@@ -28,7 +28,12 @@ export const register = async (formData: FormData) => {
             name:fullName,
             email:email,
             password: hashedPassword,
-            imageUrl: `https://api.dicebear.com/9.x/initials/svg?seed=${fullName}`
+            imageUrl: `https://api.dicebear.com/9.x/initials/svg?seed=${fullName}`,
+            stream: {
+                create:{
+                    name: `${fullName}'s stream`
+                }
+            }
         }
     })
     // console.log(user)
