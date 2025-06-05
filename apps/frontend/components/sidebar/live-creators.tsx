@@ -23,7 +23,7 @@ export function LiveCreators({creators}:CreatorProps) {
       <SidebarMenu>
         {creators.map((creator) => (
           <SidebarMenuItem key={creator.id} className="w-full my-1.5">
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton tooltip={creator.name as string} asChild>
               <Link href={`/creator/${creator.id}`} className="flex items-center gap-3.5 group-data-[collapsible=icon]:pl-0! h-fit">
                 <div className="relative">
                   <Avatar className="h-7 w-7">
