@@ -38,9 +38,12 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  const pathname = usePathname();
   return (
     <>
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -50,17 +53,17 @@ export default function Navbar() {
           className="nav-header flex justify-center items-center gap-2 md:mx-4"
         >
           <Zap className="hover:animate-pulse" />
-          <span className="font-bold text-xl hidden md:block">Streambolt</span>
+          <span className="font-bold font-brand text-xl hidden md:block">Stream</span>
         </Link>
         <div className="flex items-center gap-6 md:gap-10">
           <nav className="hidden gap-6 md:flex">
-            <Link href="/browse" className=" animated-link">
+            <Link href="/browse" className={cn("font-semibold text-muted-foreground",pathname==='/browse' ? 'text-[#1fd5f9]' : "hover:text-white")}>
               Browse
             </Link>
-            <Link href="/categories" className="animated-link">
+            <Link href="/categories" className={cn("font-semibold text-muted-foreground",pathname==='/categories' ? 'text-[#1fd5f9]' : "hover:text-white")}>
               Categories
             </Link>
-            <Link href="/following" className="animated-link">
+            <Link href="/following" className={cn("font-semibold text-muted-foreground",pathname==='/following' ? 'text-[#1fd5f9]' : "hover:text-white")}>
               Following
             </Link>
           </nav>

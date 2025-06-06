@@ -17,6 +17,10 @@ const geistMono = localFont({
   src: "../../fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
 });
+const brand = localFont({
+  src: "../../fonts/brand.woff2",
+  variable: "--font-brand"
+})
 
 export const metadata: Metadata = {
   title: "Creator's Dashboard",
@@ -28,7 +32,7 @@ export default function DashboardLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistMono.variable} ${geistSans.variable}`}>
+      <body className={`${geistMono.variable} ${brand.variable} ${geistSans.variable}`}>
         <SessionProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navbar />

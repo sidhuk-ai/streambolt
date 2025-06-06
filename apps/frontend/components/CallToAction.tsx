@@ -14,7 +14,7 @@ export function CallToAction(){
           </p>
         </div>
         <div className="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end">
-          <Button size="lg" className="gap-1.5">
+          <Button size="lg" className="gap-1.5 font-brand">
             <Play className="h-4 w-4" />
             Start Streaming
           </Button>

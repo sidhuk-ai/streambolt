@@ -12,7 +12,7 @@ export default function Hero() {
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                Stream Live to the World
+                <span className="font-brand tracking-wide">Stream</span> Live to the World
               </h1>
               <p className="max-w-[600px] text-muted-foreground md:text-xl">
                 Start your live stream in seconds and connect with viewers around the globe. Share your passion, build

@@ -16,6 +16,10 @@ const geistMono = localFont({
   src: "../fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
 });
+const brand = localFont({
+  src: "../fonts/brand.woff2",
+  variable: "--font-brand"
+})
 
 export const metadata: Metadata = {
   title: "StreamBolt",
@@ -29,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${brand.variable}`}>
         <SessionProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navbar />

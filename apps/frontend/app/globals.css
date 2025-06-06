@@ -66,6 +66,10 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
+.font-brand{
+  font-family: var(--font-brand);
+}
+
 :root {
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
