@@ -24,13 +24,11 @@ export default function Layout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <>
-        <Navbar />
-        <SidebarProvider defaultOpen={false}>
-            <AppSidebar />
-            <SidebarInset>
-                {children}
-            </SidebarInset>
-        </SidebarProvider>
+      <Navbar />
+      <SidebarProvider defaultOpen={false}>
+        <AppSidebar />
+        <SidebarInset>{children}</SidebarInset>
+      </SidebarProvider>
     </>
   );
 }

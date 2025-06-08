@@ -7,13 +7,13 @@ import {
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export function NavMain({
-  items
+  items,
 }: {
   items: {
     title: string;
@@ -26,9 +26,13 @@ export function NavMain({
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu className="gap-5 ">
-        {items.map((item,i) => (
+        {items.map((item, i) => (
           <SidebarMenuItem key={i}>
-            <SidebarMenuButton tooltip={item.title} isActive={pathname===item.url} asChild>
+            <SidebarMenuButton
+              tooltip={item.title}
+              isActive={pathname === item.url}
+              asChild
+            >
               <Link href={item.url} className="p-3">
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>

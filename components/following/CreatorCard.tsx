@@ -5,11 +5,11 @@ import { AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface CreatorCardProps {
   creator: {
-    id: string
+    id: string | undefined
     username: string
     isLive: boolean
     avatar: string
-    category: string | undefined
+    category: string
   }
 }
 
