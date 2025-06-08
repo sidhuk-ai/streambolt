@@ -4,15 +4,10 @@ import { createIngress } from '@/actions/ingress';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { IngressInput } from 'livekit-server-sdk';
+import { IngressType, RTMP, WHIP } from '@/types/livekit';
 import { Loader2Icon, TriangleAlert } from 'lucide-react';
 import React, { ComponentRef, useRef, useState, useTransition } from 'react'
 import { toast } from 'sonner';
-
-const RTMP = String(IngressInput.RTMP_INPUT)
-const WHIP = String(IngressInput.WHIP_INPUT)
-
-type IngressType = typeof RTMP | typeof WHIP;
 
 const KeysModal = () => {
     const closeRef = useRef<ComponentRef<"button">>(null);
