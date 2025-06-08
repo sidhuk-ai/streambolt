@@ -30,15 +30,15 @@ const Header = () => {
         />
         <Breadcrumb>
           <BreadcrumbList>
-          {
-            paths.slice(0,paths.length - 1).map((path,i) => {
-              return(
+            {paths.slice(0, paths.length - 1).map((path, i) => {
+              return (
                 <BreadcrumbItem key={i} className="hidden md:block">
-                  <BreadcrumbLink href={`/${path.toLowerCase()}`}>{path}</BreadcrumbLink>
+                  <BreadcrumbLink href={`/${path.toLowerCase()}`}>
+                    {path}
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
-              )
-            })
-          }
+              );
+            })}
             <BreadcrumbSeparator className="hidden md:block" />
             <BreadcrumbItem>
               <BreadcrumbPage>{paths.slice(-1)}</BreadcrumbPage>

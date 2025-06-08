@@ -19,9 +19,5 @@ export const metadata: Metadata = {
 export default function AuthenticationLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
-    return(
-        <>
-        {children}
-        </>
-    )
+  return <>{children}</>;
 }

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import localFont from 'next/font/local'
+import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SessionProvider } from "next-auth/react"
-import { Toaster } from "sonner"
+import { SessionProvider } from "next-auth/react";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 
 const brand = localFont({
   src: "./fonts/brand.woff2",
-  variable: "--font-brand"
-})
+  variable: "--font-brand",
+});
 
 export const metadata: Metadata = {
   title: "Homepage",

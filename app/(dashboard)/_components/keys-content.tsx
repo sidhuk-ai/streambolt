@@ -1,16 +1,23 @@
 "use client";
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import { Textarea } from "@/components/ui/textarea"
-import { useState } from "react"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 import KeysModal from "./keys-modal";
 
 export default function KeysContent() {
-  const [autoRecord, setAutoRecord] = useState(true)
-  const [show, setShow] = useState(false)
+  const [autoRecord, setAutoRecord] = useState(true);
+  const [show, setShow] = useState(false);
 
   return (
     <div className="space-y-4">
@@ -18,7 +25,9 @@ export default function KeysContent() {
         <CardHeader className="flex md:flex-row justify-between">
           <div className="flex flex-col gap-1">
             <CardTitle>Stream Configuration</CardTitle>
-            <CardDescription>Configure your stream settings and defaults</CardDescription>
+            <CardDescription>
+              Configure your stream settings and defaults
+            </CardDescription>
           </div>
           <div className="m-3">
             <KeysModal />
@@ -28,30 +37,50 @@ export default function KeysContent() {
           <div className="space-y-2">
             <Label htmlFor="stream-key">Stream Key</Label>
             <div className="flex gap-2">
-              <Input id="stream-key" type={show ? "text" : "password"} defaultValue="sk_live_12345678" readOnly />
+              <Input
+                id="stream-key"
+                type={show ? "text" : "password"}
+                defaultValue="sk_live_12345678"
+                readOnly
+              />
               <Button variant="outline" size="sm">
                 Copy
               </Button>
-              <Button variant="outline" size="sm" onClick={() => setShow(!show)}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShow(!show)}
+              >
                 {show ? "Hide" : "Show"}
               </Button>
             </div>
             <p className="text-xs text-muted-foreground">
-              Use this key in your streaming software. Never share your stream key with anyone.
+              Use this key in your streaming software. Never share your stream
+              key with anyone.
             </p>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="stream-url">Stream URL</Label>
-            <Input id="stream-url" defaultValue="rtmp://stream.streambolt.com/live" readOnly />
+            <Input
+              id="stream-url"
+              defaultValue="rtmp://stream.streambolt.com/live"
+              readOnly
+            />
           </div>
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <Label htmlFor="auto-record">Auto-Record Streams</Label>
-              <p className="text-xs text-muted-foreground">Automatically record your streams for later viewing</p>
+              <p className="text-xs text-muted-foreground">
+                Automatically record your streams for later viewing
+              </p>
             </div>
-            <Switch id="auto-record" checked={autoRecord} onCheckedChange={setAutoRecord} />
+            <Switch
+              id="auto-record"
+              checked={autoRecord}
+              onCheckedChange={setAutoRecord}
+            />
           </div>
 
           {autoRecord && (
@@ -78,11 +107,15 @@ export default function KeysContent() {
       <Card>
         <CardHeader>
           <CardTitle>Stream Customization</CardTitle>
-          <CardDescription>Customize the appearance of your stream page</CardDescription>
+          <CardDescription>
+            Customize the appearance of your stream page
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="stream-title-template">Default Stream Title Template</Label>
+            <Label htmlFor="stream-title-template">
+              Default Stream Title Template
+            </Label>
             <Input
               id="stream-title-template"
               placeholder="e.g., {game} with {username}"
@@ -91,7 +124,9 @@ export default function KeysContent() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="stream-description-template">Default Stream Description Template</Label>
+            <Label htmlFor="stream-description-template">
+              Default Stream Description Template
+            </Label>
             <Textarea
               id="stream-description-template"
               placeholder="Enter a default description for your streams"
@@ -178,5 +213,5 @@ export default function KeysContent() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

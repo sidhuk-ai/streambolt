@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button"
 import CreatorCard from "@/components/following/CreatorCard"
 import { getFollowedCreators } from "@/actions/follow"
 import { Skeleton } from "@/components/ui/skeleton"
-import { User,Follow } from "@repo/db"
+import { Follow, User } from "@/lib/generated/prisma"
+
 
 interface Creator extends Follow {
-  following: User
+  following: Partial<User>
 }
 
 export default function CreatorCarousel() {

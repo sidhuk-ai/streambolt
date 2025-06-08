@@ -13,29 +13,29 @@ export default async function ChatPage() {
   });
   return (
     <div className="">
-        <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
-            <DashboardHeader
-                heading="Chat Settings"
-                text="Toggle your chat preferences"
-            />
-            <div className="flex flex-col w-full gap-3">
-                <ToggleCard
-                    field={"isChatEnabled"}
-                    label="Enable chat"
-                    value={stream?.isChatEnabled as boolean}
-                />
-                <ToggleCard
-                    field={"isChatDelayed"}
-                    label="Delay the chat"
-                    value={stream?.isChatDelayed as boolean}
-                />
-                <ToggleCard
-                    field={"isChatFollowersOnly"}
-                    label="Enable chat only for followers"
-                    value={stream?.isChatFollowersOnly as boolean}
-                />
-            </div>
+      <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
+        <DashboardHeader
+          heading="Chat Settings"
+          text="Toggle your chat preferences"
+        />
+        <div className="flex flex-col w-full gap-3">
+          <ToggleCard
+            field={"isChatEnabled"}
+            label="Enable chat"
+            value={stream?.isChatEnabled as boolean}
+          />
+          <ToggleCard
+            field={"isChatDelayed"}
+            label="Delay the chat"
+            value={stream?.isChatDelayed as boolean}
+          />
+          <ToggleCard
+            field={"isChatFollowersOnly"}
+            label="Enable chat only for followers"
+            value={stream?.isChatFollowersOnly as boolean}
+          />
         </div>
+      </div>
     </div>
   );
 }
