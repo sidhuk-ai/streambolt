@@ -1,34 +1,56 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
-import { Switch } from "@/components/ui/switch"
-import DashboardHeader from "@/components/dashboard/DashboardHeader"
-import { useSession } from "next-auth/react"
-import { Session } from "next-auth"
-import { Avatar, AvatarImage } from "@radix-ui/react-avatar"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Settings() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
-      <DashboardHeader heading="Settings" text="Manage your account settings and preferences" />
+      <DashboardHeader
+        heading="Settings"
+        text="Manage your account settings and preferences"
+      />
 
       <Tabs defaultValue="profile" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="profile" className="cursor-pointer">Profile</TabsTrigger>
-          <TabsTrigger value="account" className="cursor-pointer">Account</TabsTrigger>
-          <TabsTrigger value="notifications" className="cursor-pointer">Notifications</TabsTrigger>
-          <TabsTrigger value="stream" className="cursor-pointer">Stream Settings</TabsTrigger>
+          <TabsTrigger value="profile" className="cursor-pointer">
+            Profile
+          </TabsTrigger>
+          <TabsTrigger value="account" className="cursor-pointer">
+            Account
+          </TabsTrigger>
+          <TabsTrigger value="notifications" className="cursor-pointer">
+            Notifications
+          </TabsTrigger>
+          <TabsTrigger value="stream" className="cursor-pointer">
+            Stream Settings
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="profile" className="space-y-4">
-          <ProfileSettings session={session} />
+          {status === "loading" ?
+            <ProfileSkeleton /> : 
+            <ProfileSettings session={session} />
+          }
         </TabsContent>
 
         <TabsContent value="account" className="space-y-4">
@@ -44,15 +66,17 @@ export default function Settings() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
 
-function ProfileSettings({session}:{session:Session | null}) {
+function ProfileSettings({ session }: { session: Session | null }) {
   return (
     <Card>
       <CardHeader>
         <CardTitle>Profile Information</CardTitle>
-        <CardDescription>Update your profile information visible to other users</CardDescription>
+        <CardDescription>
+          Update your profile information visible to other users
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
@@ -60,8 +84,11 @@ function ProfileSettings({session}:{session:Session | null}) {
             <div className="h-20 w-20 rounded-full bg-muted overflow-hidden">
               <Avatar>
                 <AvatarImage
-                  src={session?.user?.image ?? "/placeholder.svg?height=80&width=80&text=U"}
-                  alt={session?.user?.name?.slice(0,2) ?? "User avatar"} 
+                  src={
+                    session?.user?.image ??
+                    "/placeholder.svg?height=80&width=80&text=U"
+                  }
+                  alt={session?.user?.name?.slice(0, 2) ?? "User avatar"}
                 />
               </Avatar>
             </div>
@@ -69,7 +96,9 @@ function ProfileSettings({session}:{session:Session | null}) {
               <Button variant="outline" size="sm">
                 Change Avatar
               </Button>
-              <p className="text-xs text-muted-foreground">JPG or PNG. Max size 2MB.</p>
+              <p className="text-xs text-muted-foreground">
+                JPG or PNG. Max size 2MB.
+              </p>
             </div>
           </div>
         </div>
@@ -81,7 +110,10 @@ function ProfileSettings({session}:{session:Session | null}) {
           </div>
           <div className="space-y-2">
             <Label htmlFor="username">Username</Label>
-            <Input id="username" defaultValue={"streamuser_"+session?.user?.id?.slice(-4)} />
+            <Input
+              id="username"
+              defaultValue={"streamuser_" + session?.user?.id?.slice(-4)}
+            />
           </div>
         </div>
 
@@ -98,7 +130,11 @@ function ProfileSettings({session}:{session:Session | null}) {
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="location">Location</Label>
-            <Input id="location" placeholder="City, Country" defaultValue="New York, USA" />
+            <Input
+              id="location"
+              placeholder="City, Country"
+              defaultValue="New York, USA"
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="website">Website</Label>
@@ -111,22 +147,85 @@ function ProfileSettings({session}:{session:Session | null}) {
         <Button>Save Changes</Button>
       </CardFooter>
     </Card>
-  )
+  );
 }
 
-function AccountSettings({session}:{session:Session | null}) {
+const ProfileSkeleton = () => {
+  return (
+    <Card>
+      <CardHeader>
+        <Skeleton className="h-6 w-40" />
+        <Skeleton className="h-4 w-80 mt-2" />
+      </CardHeader>
+
+      <CardContent className="space-y-4">
+        {/* Avatar + Button + note */}
+        <div className="flex items-center gap-4">
+          <Skeleton className="h-20 w-20 rounded-full" />
+          <div className="space-y-2">
+            <Skeleton className="h-8 w-32 rounded-md" />
+            <Skeleton className="h-3 w-52" />
+          </div>
+        </div>
+
+        {/* Name and Username */}
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-10 w-full rounded-md" />
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-10 w-full rounded-md" />
+          </div>
+        </div>
+
+        {/* Bio */}
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-24" />
+          <Skeleton className="h-[100px] w-full rounded-md" />
+        </div>
+
+        {/* Location and Website */}
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-10 w-full rounded-md" />
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-10 w-full rounded-md" />
+          </div>
+        </div>
+      </CardContent>
+
+      <CardFooter className="flex justify-end gap-2">
+        <Skeleton className="h-10 w-24 rounded-md" />
+        <Skeleton className="h-10 w-32 rounded-md" />
+      </CardFooter>
+    </Card>
+  );
+};
+
+function AccountSettings({ session }: { session: Session | null }) {
   return (
     <div className="space-y-4">
       <Card>
         <CardHeader>
           <CardTitle>Account Information</CardTitle>
-          <CardDescription>Update your account details and email preferences</CardDescription>
+          <CardDescription>
+            Update your account details and email preferences
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="email">Email Address</Label>
-              <Input id="email" type="email" defaultValue={session?.user?.email ?? ""} />
+              <Input
+                id="email"
+                type="email"
+                defaultValue={session?.user?.email ?? ""}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Phone Number (Optional)</Label>
@@ -143,7 +242,9 @@ function AccountSettings({session}:{session:Session | null}) {
       <Card>
         <CardHeader>
           <CardTitle>Change Password</CardTitle>
-          <CardDescription>Update your password to keep your account secure</CardDescription>
+          <CardDescription>
+            Update your password to keep your account secure
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -170,14 +271,18 @@ function AccountSettings({session}:{session:Session | null}) {
       <Card>
         <CardHeader>
           <CardTitle>Danger Zone</CardTitle>
-          <CardDescription>Irreversible and destructive actions</CardDescription>
+          <CardDescription>
+            Irreversible and destructive actions
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="rounded-md border border-destructive/50 p-4">
             <div className="flex items-center justify-between">
               <div>
                 <h4 className="font-medium">Delete Account</h4>
-                <p className="text-sm text-muted-foreground">Permanently delete your account and all of your content</p>
+                <p className="text-sm text-muted-foreground">
+                  Permanently delete your account and all of your content
+                </p>
               </div>
               <Button variant="destructive">Delete Account</Button>
             </div>
@@ -185,7 +290,7 @@ function AccountSettings({session}:{session:Session | null}) {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
 
 function NotificationSettings() {
@@ -193,7 +298,9 @@ function NotificationSettings() {
     <Card>
       <CardHeader>
         <CardTitle>Notification Preferences</CardTitle>
-        <CardDescription>Choose how and when you want to be notified</CardDescription>
+        <CardDescription>
+          Choose how and when you want to be notified
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
@@ -203,13 +310,19 @@ function NotificationSettings() {
               { id: "email-followers", label: "New followers" },
               { id: "email-comments", label: "Comments on your streams" },
               { id: "email-mentions", label: "Mentions and tags" },
-              { id: "email-newsletter", label: "StreamBolt newsletter and updates" },
+              {
+                id: "email-newsletter",
+                label: "StreamBolt newsletter and updates",
+              },
             ].map((item) => (
               <div key={item.id} className="flex items-center justify-between">
                 <Label htmlFor={item.id} className="flex-1 cursor-pointer">
                   {item.label}
                 </Label>
-                <Switch id={item.id} defaultChecked={item.id !== "email-newsletter"} />
+                <Switch
+                  id={item.id}
+                  defaultChecked={item.id !== "email-newsletter"}
+                />
               </div>
             ))}
           </div>
@@ -239,24 +352,31 @@ function NotificationSettings() {
         <Button>Save Preferences</Button>
       </CardFooter>
     </Card>
-  )
+  );
 }
 
 function StreamSettings() {
-  const [autoRecord, setAutoRecord] = useState(true)
+  const [autoRecord, setAutoRecord] = useState(true);
 
   return (
     <div className="space-y-4">
       <Card>
         <CardHeader>
           <CardTitle>Stream Configuration</CardTitle>
-          <CardDescription>Configure your stream settings and defaults</CardDescription>
+          <CardDescription>
+            Configure your stream settings and defaults
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="stream-key">Stream Key</Label>
             <div className="flex gap-2">
-              <Input id="stream-key" type="password" defaultValue="sk_live_12345678" readOnly />
+              <Input
+                id="stream-key"
+                type="password"
+                defaultValue="sk_live_12345678"
+                readOnly
+              />
               <Button variant="outline" size="sm">
                 Copy
               </Button>
@@ -265,21 +385,32 @@ function StreamSettings() {
               </Button>
             </div>
             <p className="text-xs text-muted-foreground">
-              Use this key in your streaming software. Never share your stream key with anyone.
+              Use this key in your streaming software. Never share your stream
+              key with anyone.
             </p>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="stream-url">Stream URL</Label>
-            <Input id="stream-url" defaultValue="rtmp://stream.streambolt.com/live" readOnly />
+            <Input
+              id="stream-url"
+              defaultValue="rtmp://stream.streambolt.com/live"
+              readOnly
+            />
           </div>
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <Label htmlFor="auto-record">Auto-Record Streams</Label>
-              <p className="text-xs text-muted-foreground">Automatically record your streams for later viewing</p>
+              <p className="text-xs text-muted-foreground">
+                Automatically record your streams for later viewing
+              </p>
             </div>
-            <Switch id="auto-record" checked={autoRecord} onCheckedChange={setAutoRecord} />
+            <Switch
+              id="auto-record"
+              checked={autoRecord}
+              onCheckedChange={setAutoRecord}
+            />
           </div>
 
           {autoRecord && (
@@ -306,11 +437,15 @@ function StreamSettings() {
       <Card>
         <CardHeader>
           <CardTitle>Stream Customization</CardTitle>
-          <CardDescription>Customize the appearance of your stream page</CardDescription>
+          <CardDescription>
+            Customize the appearance of your stream page
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="stream-title-template">Default Stream Title Template</Label>
+            <Label htmlFor="stream-title-template">
+              Default Stream Title Template
+            </Label>
             <Input
               id="stream-title-template"
               placeholder="e.g., {game} with {username}"
@@ -319,7 +454,9 @@ function StreamSettings() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="stream-description-template">Default Stream Description Template</Label>
+            <Label htmlFor="stream-description-template">
+              Default Stream Description Template
+            </Label>
             <Textarea
               id="stream-description-template"
               placeholder="Enter a default description for your streams"
@@ -406,6 +543,5 @@ function StreamSettings() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }
-
