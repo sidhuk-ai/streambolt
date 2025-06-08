@@ -23,7 +23,7 @@ const UnauthenticatedPage = () => {
       </p>
 
       <Button asChild className="group transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-primary/90 hover:shadow-lg">
-        <Link href="/register">
+        <Link href="/sign-up">
           Sign up
           <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
