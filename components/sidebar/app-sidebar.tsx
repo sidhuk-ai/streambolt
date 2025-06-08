@@ -8,23 +8,13 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar-02";
 import { LiveCreators } from "./live-creators";
-// import { getAllCreators } from "@/actions/user";
+import { getAllCreators } from "@/actions/user";
 
 
 export async function AppSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const creators = [{
-    id: "someRandomID",
-    email: "name@example.com",
-    name: "Naam",
-    password: "StrongPassword",
-    username: "Name's_username",
-    emailVerified: null,
-    imageUrl: "",
-    createdAt: new Date(Date.now()),
-    updatedAt: new Date(Date.now()),
-}];
+  const creators = await getAllCreators();
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="cursor-pointer">
