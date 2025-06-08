@@ -1,7 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { Calendar, UserCheck, UserPlus, MoreVertical, Ban, Verified } from "lucide-react";
+import {
+  Calendar,
+  UserCheck,
+  UserPlus,
+  MoreVertical,
+  Ban,
+  Verified,
+  Loader2Icon,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { onFollow, onUnfollow } from "@/actions/follow";
@@ -9,7 +17,12 @@ import { toast } from "sonner";
 import { useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { User } from "@repo/db";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 import { onBlock, onUnblock } from "@/actions/block";
 
 interface CreatorHeaderProps {
@@ -25,7 +38,6 @@ export function CreatorHeader({
   isBlocked,
   creatorId,
 }: CreatorHeaderProps) {
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -44,9 +56,9 @@ export function CreatorHeader({
   };
 
   const handleBlockClick = () => {
-    if(isBlocked){
+    if (isBlocked) {
       handleUnblock();
-    }else{
+    } else {
       handleBlock();
     }
   };
@@ -55,26 +67,26 @@ export function CreatorHeader({
     startTransistion(() => {
       onBlock(creatorId)
         .then((data) => {
-          toast.info(`You blocked ${data.blocked.name}.`)
+          toast.info(`You blocked ${data.blocked.name}.`);
         })
         .catch((err) => {
-          console.log(err)
-          toast.error(`${err}`)
-        })
-    })
-  }
+          console.log(err);
+          toast.error(`${err}`);
+        });
+    });
+  };
 
   const handleUnblock = () => {
     startTransistion(() => {
       onUnblock(creatorId)
         .then((data) => {
-          toast.success(`You unblocked ${data.blocked.name}.`)
+          toast.success(`You unblocked ${data.blocked.name}.`);
         })
         .catch((err) => {
-          toast.error(`${err}.`)
-        })
-    })
-  }
+          toast.error(`${err}.`);
+        });
+    });
+  };
 
   const handleFollow = () => {
     startTransistion(() => {
@@ -141,7 +153,7 @@ export function CreatorHeader({
                   <h1 className="text-2xl md:text-3xl font-bold">
                     {creator.name}
                   </h1>
-                  <Verified className="h-6 w-6 text-blue-00" />
+                  <Verified className="h-6 w-6 text-[#1fd5f9]" />
                 </div>
                 <p className="text-lg text-muted-foreground">
                   @streamer-{creator.id.slice(-4)}
@@ -169,7 +181,12 @@ export function CreatorHeader({
                     : "bg-purple-600 hover:bg-purple-700"
                 }`}
               >
-                {isFollowing ? (
+                {isPending ? (
+                  <>
+                    <Loader2Icon className="animate-spin" />
+                    Please wait
+                  </>
+                ) : isFollowing ? (
                   <>
                     <UserCheck className="h-4 w-4" />
                     <span className="group-hover:hidden">Following</span>
@@ -189,9 +206,16 @@ export function CreatorHeader({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="p-1 mr-10 mt-1">
-                  <DropdownMenuItem variant="destructive" disabled={isPending} className="flex items-center" onClick={handleBlockClick}>
+                  <DropdownMenuItem
+                    variant="destructive"
+                    disabled={isPending}
+                    className="flex items-center"
+                    onClick={handleBlockClick}
+                  >
                     <Ban />
-                    <span className="font-semibold text-base pb-0.5">Block</span>
+                    <span className="font-semibold text-base pb-0.5">
+                      Block
+                    </span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
