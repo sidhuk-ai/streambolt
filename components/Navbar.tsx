@@ -95,7 +95,7 @@ export default function Navbar() {
                     Log in
                   </Button>
                 </Link>
-                <Link href={"/register"}>
+                <Link href={"/sign-up"}>
                   <Button size="sm" className="cursor-pointer hidden md:flex">
                     Sign up
                   </Button>
@@ -133,7 +133,7 @@ function DrawerMenu() {
                   Login
                 </Button>
               </Link>
-              <Link href={'/register'} className="w-full">
+              <Link href={'/sign-up'} className="w-full">
                 <Button className="w-full">
                   <UserRoundPlus />
                   Sign Up
