@@ -49,13 +49,13 @@ export default function SignUpPage() {
           <form className="space-y-6" action={register} >
             <div className="space-y-4">
               {/* Name field */}
-              <div className="flex">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">Full Name</Label>
+              <div className="flex gap-4">
+                <div className="space-y-2 w-full">
+                  <Label htmlFor="firstName">First Name</Label>
                   <Input id="firstName" name="firstName" type="text" autoComplete="first-name" placeholder="John" />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Full Name</Label>
+                <div className="space-y-2 w-full">
+                  <Label htmlFor="lastName">Last Name</Label>
                   <Input id="lastName" name="lastName" type="text" autoComplete="last-name" placeholder="Doe" />
                 </div>
               </div>
