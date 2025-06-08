@@ -16,7 +16,6 @@ import { onFollow, onUnfollow } from "@/actions/follow";
 import { toast } from "sonner";
 import { useTransition } from "react";
 import { Button } from "@/components/ui/button";
-import { User } from "@repo/db";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +23,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { onBlock, onUnblock } from "@/actions/block";
+import { User } from "@/lib/generated/prisma";
 
 interface CreatorHeaderProps {
   creator: User;
