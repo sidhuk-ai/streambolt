@@ -21,6 +21,7 @@ export default function AuthenticationLayout({
 }: Readonly<{ children: ReactNode }>) {
     return(
         <>
+        {children}
         </>
     )
 }

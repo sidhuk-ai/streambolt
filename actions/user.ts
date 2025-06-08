@@ -59,9 +59,22 @@ export const getSelf = async () => {
 
         if(!session?.user) throw new Error("Your session was not found. Try Logging in again.");
 
-        return session.user
+        const user = await prisma.user.findUnique({
+            where:{
+                id: session.user.id
+            },
+            select:{
+                id: true,
+                name: true,
+                username: true,
+                email: true,
+                imageUrl: true
+            }
+        })
+
+        return user;
     } catch (error) {
-        throw new Error("Error occured while getting your sessions.");
+        return null;
     }
 }
 
@@ -72,14 +85,14 @@ export const getAllCreators = async () => {
             AND: [
                 {
                     NOT:{
-                        id: self.id
+                        id: self?.id
                     }
                 },
                 {
                     // Hamne jise block kiya hai use hata do
                     blockedBy: {
                         none:{
-                            blockerId: self.id
+                            blockerId: self?.id
                         }
                     }
                 },
@@ -87,7 +100,7 @@ export const getAllCreators = async () => {
                     // Ham logon ko jisne bhi block kiya hai usko bhi hata do
                     blocking: {
                         none:{
-                            blockedId: self.id
+                            blockedId: self?.id
                         }
                     }
                 }
