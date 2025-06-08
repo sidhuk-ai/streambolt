@@ -1,5 +1,8 @@
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Metadata } from "next";
 import { ReactNode } from "react";
+import { AppSidebar } from "./_components/app-sidebar";
+import Header from "./_components/Header";
 
 export const metadata: Metadata = {
   title: "Dashboard – Streambolt",
@@ -19,8 +22,15 @@ export const metadata: Metadata = {
 export default function DashboardLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
-    return(
-        <>
-        </>
-    )
+  return (
+    <>
+      <SidebarProvider defaultOpen={true}>
+        <AppSidebar />
+        <SidebarInset>
+          <Header />
+          {children}
+        </SidebarInset>
+      </SidebarProvider>
+    </>
+  );
 }
