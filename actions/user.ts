@@ -107,7 +107,14 @@ export const getAllCreators = async () => {
             ],
             
         },
-        take:5
+        take:5,
+        include:{
+            stream:{
+                select: {
+                    isLive: true
+                }
+            }
+        }
     })
     return someCreators;
 }

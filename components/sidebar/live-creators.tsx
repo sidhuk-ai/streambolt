@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 import { User } from "@/lib/generated/prisma";
 
 interface CreatorProps{
-  creators: User[]
+  creators: (User & {stream:{isLive: boolean} | null})[]
 }
 
 export function LiveCreators({creators}:CreatorProps) {
@@ -32,9 +32,9 @@ export function LiveCreators({creators}:CreatorProps) {
                     <AvatarImage src={creator.imageUrl || "/placeholder.svg"} alt={creator.name || creator.id.slice(0,3)} />
                     <AvatarFallback>{creator?.name?.slice(0, 2)}</AvatarFallback>
                   </Avatar>
-                  {/* {creator.isLive && ( */}
+                  {creator.stream?.isLive && (
                     <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-red-500 border-2 border-background"/>
-                  {/* )} */}
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="font-medium text-sm truncate">{creator.name}</div>
