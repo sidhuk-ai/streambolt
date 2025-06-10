@@ -24,7 +24,7 @@ export function NavMain({
   const pathname = usePathname();
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>Account</SidebarGroupLabel>
       <SidebarMenu className="gap-5 ">
         {items.map((item, i) => (
           <SidebarMenuItem key={i}>
