@@ -1,16 +1,31 @@
-"use client"
+"use client";
 
-import { useRef, useEffect, useState, useTransition } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import CreatorCard from "@/components/following/CreatorCard"
-import { getFollowedCreators } from "@/actions/follow"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Follow, User } from "@/lib/generated/prisma"
+import { useRef, useEffect, useState, useTransition } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import CreatorCard from "@/components/following/CreatorCard";
+import { getFollowedCreators } from "@/actions/follow";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Prisma } from "@/lib/generated/prisma";
 
+type Following = Prisma.UserGetPayload<{
+  select:{
+    name: true,
+    id: true,
+    imageUrl: true,
+    username: true,
+    email: true,
+    stream: {
+      select:{
+        id: true,
+        isLive: true
+      }
+    }
+  }
+}>
 
-interface Creator extends Follow {
-  following: Partial<User>
+interface Creator {
+  following: Following;
 }
 
 export default function CreatorCarousel() {
@@ -30,12 +45,12 @@ export default function CreatorCarousel() {
   };
 
   useEffect(() => {
-    startTransition(()=>{
+    startTransition(() => {
       getFollowedCreators().then((data) => {
-        setCreators([...data])
+        setCreators([...data]);
       });
-    })
-    
+    });
+
     checkScrollButtons();
     window.addEventListener("resize", checkScrollButtons);
     return () => window.removeEventListener("resize", checkScrollButtons);
@@ -44,8 +59,11 @@ export default function CreatorCarousel() {
   const mockCreators = creators.map((creator, i) => ({
     id: creator.following.id,
     username: `${creator.following.name}`,
-    isLive: i % 3 === 0,
-    avatar: `${creator.following.imageUrl ?? `/placeholder.svg?height=200&width=200&text=C${i + 1}`}`,
+    isLive: creator.following.stream?.isLive,
+    avatar: `${
+      creator.following.imageUrl ??
+      `/placeholder.svg?height=200&width=200&text=C${i + 1}`
+    }`,
     category: ["Gaming", "Music", "IRL", "Art", "Food"][i % 5],
   }));
 
@@ -100,19 +118,17 @@ export default function CreatorCarousel() {
         className="flex gap-4 overflow-x-auto py-2 scrollbar-hide"
         onScroll={checkScrollButtons}
       >
-        {isPending ? 
+        {isPending ? (
           <aside className="flex gap-4 overflow-x-visible">
-          {Array.from({length: 15}).map((_,i)=>{
-            return(
-              <Skeleton className="h-20 w-20 rounded-full" key={i} />
-            )
-          })}
+            {Array.from({ length: 15 }).map((_, i) => {
+              return <Skeleton className="h-20 w-20 rounded-full" key={i} />;
+            })}
           </aside>
-          :
+        ) : (
           mockCreators.map((creator) => (
             <CreatorCard key={creator.id} creator={creator} />
           ))
-        }
+        )}
       </div>
     </div>
   );

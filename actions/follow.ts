@@ -40,6 +40,7 @@ export const getFollowedCreators = async () => {
         const creators = await getFollowingCreators();
         return creators;
     } catch (error) {
+        console.log(error)
         return [];
     }
 }

@@ -23,20 +23,29 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { onBlock, onUnblock } from "@/actions/block";
-import { User } from "@/lib/generated/prisma";
+import { Prisma } from "@/lib/generated/prisma";
+
+type Creator = Prisma.UserGetPayload<{
+  select: {
+    id: true,
+    username: true,
+    name: true,
+    email: true,
+    imageUrl: true,
+    createdAt: true
+  }
+}>
 
 interface CreatorHeaderProps {
-  creator: User;
+  creator: Creator;
   isFollowing: boolean;
   isBlocked: boolean;
-  creatorId: string;
 }
 
 export function CreatorHeader({
   creator,
   isFollowing,
   isBlocked,
-  creatorId,
 }: CreatorHeaderProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -65,7 +74,7 @@ export function CreatorHeader({
 
   const handleBlock = () => {
     startTransistion(() => {
-      onBlock(creatorId)
+      onBlock(creator.id)
         .then((data) => {
           toast.info(`You blocked ${data.blocked.name}.`);
         })
@@ -78,7 +87,7 @@ export function CreatorHeader({
 
   const handleUnblock = () => {
     startTransistion(() => {
-      onUnblock(creatorId)
+      onUnblock(creator.id)
         .then((data) => {
           toast.success(`You unblocked ${data.blocked.name}.`);
         })
@@ -90,7 +99,7 @@ export function CreatorHeader({
 
   const handleFollow = () => {
     startTransistion(() => {
-      onFollow(creatorId)
+      onFollow(creator.id)
         .then((data) => {
           toast.success(`You started following ${data.following.name}`);
         })
@@ -102,7 +111,7 @@ export function CreatorHeader({
 
   const handleUnfollow = () => {
     startTransistion(() => {
-      onUnfollow(creatorId)
+      onUnfollow(creator.id)
         .then((data) => {
           toast.success(`You un-followed ${data.following.name}`);
         })
@@ -156,7 +165,7 @@ export function CreatorHeader({
                   <Verified className="h-6 w-6 text-[#1fd5f9]" />
                 </div>
                 <p className="text-lg text-muted-foreground">
-                  @streamer-{creator.id.slice(-4)}
+                  @{creator.username}
                 </p>
               </div>
 
