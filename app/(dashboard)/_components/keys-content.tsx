@@ -14,16 +14,17 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import KeysModal from "./keys-modal";
+import { Key, Link2, SquarePen } from "lucide-react";
 
 type Props = {
-  streamKey: string | null,
-  serverUrl: string | null,
-}
-interface KeysContentProps{
-  keys: Props | null
+  streamKey: string | null;
+  serverUrl: string | null;
+};
+interface KeysContentProps {
+  keys: Props | null;
 }
 
-export default function KeysContent({keys}:KeysContentProps) {
+export default function KeysContent({ keys }: KeysContentProps) {
   const [autoRecord, setAutoRecord] = useState(true);
   const [show, setShow] = useState(false);
 
@@ -45,12 +46,18 @@ export default function KeysContent({keys}:KeysContentProps) {
           <div className="space-y-2">
             <Label htmlFor="stream-key">Stream Key</Label>
             <div className="flex gap-2">
-              <Input
-                id="stream-key"
-                type={show ? "text" : "password"}
-                defaultValue={keys?.streamKey ?? "No stream key found."}
-                readOnly
-              />
+              <div className="relative w-full">
+                <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+                  <Key className="h-4 w-4" />
+                </div>
+                <Input
+                  id="stream-key"
+                  type={show ? "text" : "password"}
+                  defaultValue={keys?.streamKey ?? "No stream key found."}
+                  className="w-full rounded-lg bg-background pl-8"
+                  readOnly
+                />
+              </div>
               <Button variant="outline" size="sm">
                 Copy
               </Button>
@@ -70,11 +77,17 @@ export default function KeysContent({keys}:KeysContentProps) {
 
           <div className="space-y-2">
             <Label htmlFor="stream-url">Stream URL</Label>
-            <Input
-              id="stream-url"
-              defaultValue={keys?.serverUrl ?? "No Stream URL found."}
-              readOnly
-            />
+            <div className="relative">
+              <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+                <Link2 className="h-4 w-4" />
+              </div>
+              <Input
+                id="stream-url"
+                defaultValue={keys?.serverUrl ?? "No Stream URL found."}
+                className="w-full rounded-lg bg-background pl-8"
+                readOnly
+              />
+            </div>
           </div>
 
           <div className="flex items-center justify-between">
@@ -124,11 +137,17 @@ export default function KeysContent({keys}:KeysContentProps) {
             <Label htmlFor="stream-title-template">
               Default Stream Title Template
             </Label>
-            <Input
-              id="stream-title-template"
-              placeholder="e.g., {game} with {username}"
-              defaultValue="Streaming {game} - Come hang out!"
-            />
+            <div className="relative">
+              <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+                <SquarePen className="h-4 w-4" />
+              </div>
+              <Input
+                id="stream-title-template"
+                placeholder="e.g., {game} with {username}"
+                defaultValue="Streaming {game} - Come hang out!"
+                className="w-full rounded-lg bg-background pl-8 pb-2"
+              />
+            </div>
           </div>
 
           <div className="space-y-2">

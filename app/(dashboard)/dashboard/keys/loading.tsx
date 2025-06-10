@@ -10,7 +10,7 @@ export default function StreamSettingsSkeleton() {
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
       <Skeleton className="h-10 w-52 rounded-xl" />
-      <Skeleton className="h-10 w-52 rounded-xl" />
+      <Skeleton className="h-5 w-52 rounded-xl" />
       <div className="w-full">
         <div className="space-y-4">
           {/* STREAM CONFIGURATION CARD */}
