@@ -1,9 +1,12 @@
-import React from 'react'
+import BrowsePage from "@/components/browse/BrowsePage"
+import Loading from "./loading"
+import { Suspense } from "react"
 
-const page = () => {
+export default function Browse() {
   return (
-    <div>page</div>
+    <Suspense fallback={<Loading />} >
+      <BrowsePage />
+    </Suspense>
   )
 }
 
-export default page
