@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,13 +13,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import { useSession } from "next-auth/react";
-import { Session } from "next-auth";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
+import { User } from "@/lib/generated/prisma";
+import { AtSign, Link, Mail, MapPin, Phone, User as User2 } from "lucide-react";
 
-export default function Settings() {
-  const { data: session, status } = useSession();
+interface SettingProps {
+  user: Partial<User>;
+}
+
+export default async function Settings({ user }: SettingProps) {
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
       <DashboardHeader
@@ -41,35 +40,25 @@ export default function Settings() {
           <TabsTrigger value="notifications" className="cursor-pointer">
             Notifications
           </TabsTrigger>
-          <TabsTrigger value="stream" className="cursor-pointer">
-            Stream Settings
-          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="profile" className="space-y-4">
-          {status === "loading" ?
-            <ProfileSkeleton /> : 
-            <ProfileSettings session={session} />
-          }
+          <ProfileSettings user={user} />
         </TabsContent>
 
         <TabsContent value="account" className="space-y-4">
-          <AccountSettings session={session} />
+          <AccountSettings user={user} />
         </TabsContent>
 
         <TabsContent value="notifications" className="space-y-4">
           <NotificationSettings />
-        </TabsContent>
-
-        <TabsContent value="stream" className="space-y-4">
-          <StreamSettings />
         </TabsContent>
       </Tabs>
     </div>
   );
 }
 
-function ProfileSettings({ session }: { session: Session | null }) {
+function ProfileSettings({ user }: { user: Partial<User> | null }) {
   return (
     <Card>
       <CardHeader>
@@ -85,10 +74,10 @@ function ProfileSettings({ session }: { session: Session | null }) {
               <Avatar className="w-full h-full">
                 <AvatarImage
                   src={
-                    session?.user?.image ??
+                    user?.imageUrl ??
                     "/placeholder.svg?height=80&width=80&text=U"
                   }
-                  alt={session?.user?.name?.slice(0, 2) ?? "User avatar"}
+                  alt={user?.name?.slice(0, 2) ?? "User avatar"}
                 />
               </Avatar>
             </div>
@@ -106,14 +95,29 @@ function ProfileSettings({ session }: { session: Session | null }) {
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="display-name">Display Name</Label>
-            <Input id="display-name" defaultValue={session?.user?.name ?? ""} />
+            <div className="relative">
+              <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+                <User2 className="h-4 w-4" />
+              </div>
+              <Input
+                id="display-name"
+                defaultValue={user?.name ?? ""}
+                className="w-full rounded-lg bg-background pl-8"
+              />
+            </div>
           </div>
           <div className="space-y-2">
             <Label htmlFor="username">Username</Label>
-            <Input
-              id="username"
-              defaultValue={"streamuser_" + session?.user?.id?.slice(-4)}
-            />
+            <div className="relative">
+              <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+                <AtSign className="h-4 w-4" />
+              </div>
+              <Input
+                id="username"
+                defaultValue={user?.username ?? ""}
+                className="w-full rounded-lg bg-background pl-8"
+              />
+            </div>
           </div>
         </div>
 
@@ -130,15 +134,30 @@ function ProfileSettings({ session }: { session: Session | null }) {
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="location">Location</Label>
-            <Input
-              id="location"
-              placeholder="City, Country"
-              defaultValue="New York, USA"
-            />
+            <div className="relative">
+              <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+                <MapPin className="h-4 w-4" />
+              </div>
+              <Input
+                id="location"
+                placeholder="City, Country"
+                defaultValue="New York, USA"
+                className="w-full rounded-lg bg-background pl-8"
+              />
+            </div>
           </div>
           <div className="space-y-2">
             <Label htmlFor="website">Website</Label>
-            <Input id="website" placeholder="https://yourwebsite.com" />
+            <div className="relative">
+              <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+                <Link className="h-4 w-4" />
+              </div>
+              <Input
+                id="website"
+                placeholder="https://yourwebsite.com"
+                className="w-full rounded-lg bg-background pl-8"
+              />
+            </div>
           </div>
         </div>
       </CardContent>
@@ -150,64 +169,7 @@ function ProfileSettings({ session }: { session: Session | null }) {
   );
 }
 
-const ProfileSkeleton = () => {
-  return (
-    <Card>
-      <CardHeader>
-        <Skeleton className="h-6 w-40" />
-        <Skeleton className="h-4 w-80 mt-2" />
-      </CardHeader>
-
-      <CardContent className="space-y-4">
-        {/* Avatar + Button + note */}
-        <div className="flex items-center gap-4">
-          <Skeleton className="h-20 w-20 rounded-full" />
-          <div className="space-y-2">
-            <Skeleton className="h-8 w-32 rounded-md" />
-            <Skeleton className="h-3 w-52" />
-          </div>
-        </div>
-
-        {/* Name and Username */}
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="space-y-2">
-            <Skeleton className="h-4 w-24" />
-            <Skeleton className="h-10 w-full rounded-md" />
-          </div>
-          <div className="space-y-2">
-            <Skeleton className="h-4 w-24" />
-            <Skeleton className="h-10 w-full rounded-md" />
-          </div>
-        </div>
-
-        {/* Bio */}
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-24" />
-          <Skeleton className="h-[100px] w-full rounded-md" />
-        </div>
-
-        {/* Location and Website */}
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="space-y-2">
-            <Skeleton className="h-4 w-24" />
-            <Skeleton className="h-10 w-full rounded-md" />
-          </div>
-          <div className="space-y-2">
-            <Skeleton className="h-4 w-24" />
-            <Skeleton className="h-10 w-full rounded-md" />
-          </div>
-        </div>
-      </CardContent>
-
-      <CardFooter className="flex justify-end gap-2">
-        <Skeleton className="h-10 w-24 rounded-md" />
-        <Skeleton className="h-10 w-32 rounded-md" />
-      </CardFooter>
-    </Card>
-  );
-};
-
-function AccountSettings({ session }: { session: Session | null }) {
+function AccountSettings({ user }: { user: Partial<User> }) {
   return (
     <div className="space-y-4">
       <Card>
@@ -221,15 +183,31 @@ function AccountSettings({ session }: { session: Session | null }) {
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="email">Email Address</Label>
-              <Input
-                id="email"
-                type="email"
-                defaultValue={session?.user?.email ?? ""}
-              />
+              <div className="relative">
+                <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+                  <Mail className="h-4 w-4" />
+                </div>
+                <Input
+                  id="email"
+                  type="email"
+                  defaultValue={user?.email ?? ""}
+                  className="w-full rounded-lg bg-background pl-8"
+                />
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Phone Number (Optional)</Label>
-              <Input id="phone" type="tel" placeholder="+1 (555) 000-0000" />
+              <div className="relative">
+                <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+                  <Phone className="h-4 w-4" />
+                </div>
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="+1 (555) 000-0000"
+                  className="w-full rounded-lg bg-background pl-8"
+                />
+              </div>
             </div>
           </div>
         </CardContent>
@@ -352,196 +330,5 @@ function NotificationSettings() {
         <Button>Save Preferences</Button>
       </CardFooter>
     </Card>
-  );
-}
-
-function StreamSettings() {
-  const [autoRecord, setAutoRecord] = useState(true);
-
-  return (
-    <div className="space-y-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>Stream Configuration</CardTitle>
-          <CardDescription>
-            Configure your stream settings and defaults
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="stream-key">Stream Key</Label>
-            <div className="flex gap-2">
-              <Input
-                id="stream-key"
-                type="password"
-                defaultValue="sk_live_12345678"
-                readOnly
-              />
-              <Button variant="outline" size="sm">
-                Copy
-              </Button>
-              <Button variant="outline" size="sm">
-                Reset
-              </Button>
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Use this key in your streaming software. Never share your stream
-              key with anyone.
-            </p>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="stream-url">Stream URL</Label>
-            <Input
-              id="stream-url"
-              defaultValue="rtmp://stream.streambolt.com/live"
-              readOnly
-            />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label htmlFor="auto-record">Auto-Record Streams</Label>
-              <p className="text-xs text-muted-foreground">
-                Automatically record your streams for later viewing
-              </p>
-            </div>
-            <Switch
-              id="auto-record"
-              checked={autoRecord}
-              onCheckedChange={setAutoRecord}
-            />
-          </div>
-
-          {autoRecord && (
-            <div className="space-y-2">
-              <Label htmlFor="recording-quality">Recording Quality</Label>
-              <select
-                id="recording-quality"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <option value="source">Source Quality</option>
-                <option value="high">High (1080p)</option>
-                <option value="medium">Medium (720p)</option>
-                <option value="low">Low (480p)</option>
-              </select>
-            </div>
-          )}
-        </CardContent>
-        <CardFooter className="flex justify-end gap-2">
-          <Button variant="outline">Cancel</Button>
-          <Button>Save Settings</Button>
-        </CardFooter>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Stream Customization</CardTitle>
-          <CardDescription>
-            Customize the appearance of your stream page
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="stream-title-template">
-              Default Stream Title Template
-            </Label>
-            <Input
-              id="stream-title-template"
-              placeholder="e.g., {game} with {username}"
-              defaultValue="Streaming {game} - Come hang out!"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="stream-description-template">
-              Default Stream Description Template
-            </Label>
-            <Textarea
-              id="stream-description-template"
-              placeholder="Enter a default description for your streams"
-              className="min-h-[100px]"
-              defaultValue="Welcome to my stream! Don't forget to follow for notifications when I go live."
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label>Default Tags</Label>
-            <div className="flex flex-wrap gap-2">
-              <div className="flex h-8 items-center rounded-md bg-muted px-2 text-sm">
-                English
-                <button className="ml-1 rounded-full hover:bg-muted-foreground/20">
-                  <span className="sr-only">Remove</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-3.5 w-3.5"
-                  >
-                    <path d="M18 6 6 18"></path>
-                    <path d="m6 6 12 12"></path>
-                  </svg>
-                </button>
-              </div>
-              <div className="flex h-8 items-center rounded-md bg-muted px-2 text-sm">
-                Gaming
-                <button className="ml-1 rounded-full hover:bg-muted-foreground/20">
-                  <span className="sr-only">Remove</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-3.5 w-3.5"
-                  >
-                    <path d="M18 6 6 18"></path>
-                    <path d="m6 6 12 12"></path>
-                  </svg>
-                </button>
-              </div>
-              <div className="flex h-8 items-center rounded-md bg-muted px-2 text-sm">
-                Casual
-                <button className="ml-1 rounded-full hover:bg-muted-foreground/20">
-                  <span className="sr-only">Remove</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-3.5 w-3.5"
-                  >
-                    <path d="M18 6 6 18"></path>
-                    <path d="m6 6 12 12"></path>
-                  </svg>
-                </button>
-              </div>
-              <Button variant="outline" size="sm" className="h-8">
-                Add Tag
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-        <CardFooter className="flex justify-end gap-2">
-          <Button variant="outline">Cancel</Button>
-          <Button>Save Customization</Button>
-        </CardFooter>
-      </Card>
-    </div>
   );
 }
