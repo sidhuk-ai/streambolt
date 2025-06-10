@@ -34,7 +34,12 @@ export function NavUser() {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return <Skeleton className="h-8 w-8 rounded-full text-muted-foreground" />;
+    return (
+      <div className="flex gap-2 mr-1 mb-1">
+        <Skeleton className="h-9 w-10 rounded-lg text-muted-foreground" />
+        <Skeleton className="h-9 w-full rounded-lg text-muted-foreground" />
+      </div>
+    );
   }
 
   return (
