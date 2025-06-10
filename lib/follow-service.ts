@@ -133,11 +133,16 @@ export const getFollowingCreators = async () => {
                     name: true,
                     username: true,
                     email: true,
-                    imageUrl: true
+                    imageUrl: true,
+                    stream:{
+                        select:{
+                            id: true,
+                            isLive: true
+                        }
+                    }
                 }
             }
         }
     })
-    
     return followingList;
 }

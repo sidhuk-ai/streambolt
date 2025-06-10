@@ -39,7 +39,7 @@ export function LiveCreators({creators}:CreatorProps) {
                 <div className="flex-1 min-w-0">
                   <div className="font-medium text-sm truncate">{creator.name}</div>
                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <span className="truncate">{creator.username}</span>
+                    <span className="truncate">@{creator.username}</span>
                     {/* <span>•</span> */}
                     {/* <span>{formatViewers(creator.viewers)}</span> */}
                   </div>
