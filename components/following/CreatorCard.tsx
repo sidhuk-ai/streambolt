@@ -7,7 +7,7 @@ interface CreatorCardProps {
   creator: {
     id: string | undefined
     username: string
-    isLive: boolean
+    isLive: boolean | undefined
     avatar: string
     category: string
   }
