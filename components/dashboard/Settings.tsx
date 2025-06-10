@@ -82,7 +82,7 @@ function ProfileSettings({ session }: { session: Session | null }) {
         <div className="space-y-2">
           <div className="flex items-center gap-4">
             <div className="h-20 w-20 rounded-full bg-muted overflow-hidden">
-              <Avatar>
+              <Avatar className="w-full h-full">
                 <AvatarImage
                   src={
                     session?.user?.image ??
