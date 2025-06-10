@@ -15,7 +15,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import KeysModal from "./keys-modal";
 
-export default function KeysContent() {
+type Props = {
+  streamKey: string | null,
+  serverUrl: string | null,
+}
+interface KeysContentProps{
+  keys: Props | null
+}
+
+export default function KeysContent({keys}:KeysContentProps) {
   const [autoRecord, setAutoRecord] = useState(true);
   const [show, setShow] = useState(false);
 
@@ -40,7 +48,7 @@ export default function KeysContent() {
               <Input
                 id="stream-key"
                 type={show ? "text" : "password"}
-                defaultValue="sk_live_12345678"
+                defaultValue={keys?.streamKey ?? "No stream key found."}
                 readOnly
               />
               <Button variant="outline" size="sm">
@@ -64,7 +72,7 @@ export default function KeysContent() {
             <Label htmlFor="stream-url">Stream URL</Label>
             <Input
               id="stream-url"
-              defaultValue="rtmp://stream.streambolt.com/live"
+              defaultValue={keys?.serverUrl ?? "No Stream URL found."}
               readOnly
             />
           </div>
