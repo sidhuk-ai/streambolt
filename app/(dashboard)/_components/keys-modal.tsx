@@ -75,11 +75,11 @@ const KeysModal = () => {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <div className="flex gap-4 border rounded-xl dark:border-yellow-200 p-4 dark:text-yellow-200 text-sm">
-            <TriangleAlert className="h-5 w-5" />
-            <div className="flex flex-col font-serif gap-2">
-              <span>Warning!</span>
-              <p>
+          <div className="flex gap-3 bg-background z-50 max-w-[400px] rounded-md border p-4 shadow-lg">
+            <TriangleAlert className="mt-0.5 shrink-0 text-amber-500 opacity-60" size={20} aria-hidden={true} />
+            <div className="flex grow flex-col gap-3 space-y-1">
+              <span className="text-sm font-medium">Warning!</span>
+              <p className="text-muted-foreground text-sm">
                 You will be disconnected from your current stream, by changing
                 the type of Ingress. Continue at your own risk.
               </p>
@@ -94,7 +94,6 @@ const KeysModal = () => {
             {isPending ? (
               <>
                 <Loader2Icon className="animate-spin" />
-                Generating
               </>
             ) : (
               "Generate"

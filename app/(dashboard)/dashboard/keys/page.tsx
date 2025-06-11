@@ -2,12 +2,14 @@ import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import KeysContent from "@/app/(dashboard)/_components/keys-content";
 import { prisma } from "@/lib/db";
 import { getSelf } from "@/actions/user";
+import { redirect } from "next/navigation";
 
 export default async function KeysPage() {
     const self = await getSelf();
+    if(!self) redirect('/login');
     const streamKeys = await prisma.stream.findUnique({
         where:{
-            userId: self?.id
+            userId: self.id
         },
         select:{
             streamKey: true,

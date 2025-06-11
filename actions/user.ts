@@ -128,7 +128,12 @@ export const getUserById = async (id:string) => {
             email: true,
             imageUrl: true,
             username: true,
-            createdAt: true
+            createdAt: true,
+            stream: {
+                select:{
+                    isLive: true
+                }
+            }
         }
     });
 
