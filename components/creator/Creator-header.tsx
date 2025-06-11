@@ -32,7 +32,12 @@ type Creator = Prisma.UserGetPayload<{
     name: true,
     email: true,
     imageUrl: true,
-    createdAt: true
+    createdAt: true,
+    stream:{
+      select:{
+        isLive: true
+      }
+    }
   }
 }>
 
@@ -133,10 +138,12 @@ export function CreatorHeader({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
         <div className="absolute top-4 left-4">
-          <Badge className="gap-1 bg-red-500 text-white hover:bg-red-500/90 px-3 py-1">
-            <span className="h-2 w-2 rounded-full bg-white animate-pulse" />
-            LIVE
-          </Badge>
+          {creator.stream?.isLive && 
+            <Badge className="gap-1 bg-red-500 text-white hover:bg-red-500/90 px-3 py-1">
+              <span className="h-2 w-2 rounded-full bg-white animate-pulse" />
+              LIVE
+            </Badge>
+          }
         </div>
       </div>
 
@@ -193,7 +200,6 @@ export function CreatorHeader({
                 {isPending ? (
                   <>
                     <Loader2Icon className="animate-spin" />
-                    Please wait
                   </>
                 ) : isFollowing ? (
                   <>
