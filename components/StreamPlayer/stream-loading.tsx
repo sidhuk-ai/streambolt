@@ -1,0 +1,16 @@
+import { LoaderCircle } from "lucide-react"
+
+interface StreamLoadingProps {
+    label: string
+}
+
+export default function StreamLoading({ label }: StreamLoadingProps) {
+    return (
+        <div className="h-full flex flex-col space-y-4 justify-center items-center">
+            <LoaderCircle className="h-10 w-10 text-muted-foreground animate-spin" />
+            <p className="text-muted-foreground capitalize">
+                {label}
+            </p>
+        </div>
+    )
+}
