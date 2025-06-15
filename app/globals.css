@@ -9,6 +9,10 @@
   font-family: var(--font-brand);
 }
 
+.color-brand {
+  color: #1fd5f9;
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
