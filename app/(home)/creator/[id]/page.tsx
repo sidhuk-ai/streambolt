@@ -3,6 +3,8 @@ import { CreatorHeader } from "@/components/creator/Creator-header";
 import { getUserById } from "@/actions/user";
 import Footer from "@/components/Footer";
 import { isBlockedByUser } from "@/lib/block-service";
+import Link from "next/link";
+import { SquareArrowOutUpRight } from "lucide-react";
 
 export default async function Creator({
   params,
@@ -24,6 +26,13 @@ export default async function Creator({
             isBlocked={isBlocked}
           />
         </div>
+        <Link href={`/stream/${id}`} className="px-2 group py-4 border rounded-md m-auto w-full flex items-center justify-between">
+          <div className="flex flex-col gap-y-2 group-hover:underline transition">
+            <span>Join Stream</span>
+            <p>Join the stream by the creator {creator.name}</p>
+          </div>
+          <SquareArrowOutUpRight />
+        </Link>
       </main>
       <Footer />
     </div>
