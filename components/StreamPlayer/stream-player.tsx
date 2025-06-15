@@ -1,13 +1,14 @@
 "use client";
 
 import { useViewerToken } from "@/hooks/use-viewer-token";
-import { Prisma, Stream, User } from "@/lib/generated/prisma";
+import { Prisma } from "@/lib/generated/prisma";
 import { LiveKitRoom } from "@livekit/components-react";
 import Video, { VideoSkeleton } from "./video";
 import { useChatSidebar } from "@/store/use-chat-sidebar";
 import { cn } from "@/lib/utils";
 import Chat, { ChatSkeleton } from "./chat";
-import { LoaderCircle } from "lucide-react";
+import CreatorActions, { CreatorActionSkeleton } from "./creator-actions";
+import InfoCard from "./info-card";
 
 type UserType = Prisma.UserGetPayload<{
   select: {
@@ -19,10 +20,12 @@ type UserType = Prisma.UserGetPayload<{
     createdAt: true;
     stream: {
       select: {
+        name: true;
         isLive: true;
         isChatDelayed: true;
         isChatEnabled: true;
         isChatFollowersOnly: true;
+        thumbnailUrl: true;
       };
     };
   };
@@ -59,6 +62,21 @@ export default function StreamPlayer({
             hostName={user.name as string}
             hostIdentity={user.id as string}
           />
+          <CreatorActions
+            hostName={user.name as string}
+            hostIdentity={user.id}
+            viewerIdentity={identity}
+            imageUrl={user.imageUrl as string}
+            isFollowing={isFollowing}
+            name={user.stream?.name as string}
+            hostUsername={user.username}
+          />
+          <InfoCard 
+            hostIdentity={user.id}
+            viewerIdentity={identity}
+            name={user.stream?.name as string}
+            thumbnailUrl={user.stream?.thumbnailUrl}
+          />
         </div>
         <div className={cn("2xl:col-span-2 lg:col-span-1 xl:col-span-1", collapsed && "hidden")}>
           <Chat
@@ -81,6 +99,7 @@ export const StreamPlayerSkeleton = () => {
     <div className="grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-7 h-full">
       <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 pb-10">
         <VideoSkeleton />
+        <CreatorActionSkeleton />
       </div>
       <div className="col-span-2 bg-background">
         <ChatSkeleton />
