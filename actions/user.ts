@@ -131,10 +131,12 @@ export const getUserById = async (id:string) => {
             createdAt: true,
             stream: {
                 select:{
+                    name: true,
                     isLive: true,
                     isChatDelayed: true,
                     isChatEnabled: true,
-                    isChatFollowersOnly: true
+                    isChatFollowersOnly: true,
+                    thumbnailUrl: true
                 }
             }
         }
