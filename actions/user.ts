@@ -3,6 +3,7 @@
 import { auth, signIn } from "@/auth";
 import { prisma } from "@/lib/db";
 import { hash } from "bcryptjs";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const register = async (formData: FormData) => {
@@ -51,6 +52,7 @@ export const login = async (formData: FormData) => {
         password: password,
         redirectTo: '/dashboard'
     });
+    revalidatePath('/dashboard');
 }
 
 export const getSelf = async () => {
@@ -74,48 +76,61 @@ export const getSelf = async () => {
 
         return user;
     } catch (error) {
-        return null;
+        throw new Error("User didn't logged in.")
     }
 }
 
 export const getAllCreators = async () => {
-    const self = await getSelf();
-    const someCreators = await prisma.user.findMany({
-        where:{
-            AND: [
-                {
-                    NOT:{
-                        id: self?.id
-                    }
-                },
-                {
-                    // Hamne jise block kiya hai use hata do
-                    blockedBy: {
-                        none:{
-                            blockerId: self?.id
+    let someCreators;
+    try {
+        const self = await getSelf();
+        someCreators = await prisma.user.findMany({
+            where:{
+                AND: [
+                    {
+                        NOT:{
+                            id: self?.id
+                        }
+                    },
+                    {
+                        // Hamne jise block kiya hai use hata do
+                        blockedBy: {
+                            none:{
+                                blockerId: self?.id
+                            }
+                        }
+                    },
+                    {
+                        // Ham logon ko jisne bhi block kiya hai usko bhi hata do
+                        blocking: {
+                            none:{
+                                blockedId: self?.id
+                            }
                         }
                     }
-                },
-                {
-                    // Ham logon ko jisne bhi block kiya hai usko bhi hata do
-                    blocking: {
-                        none:{
-                            blockedId: self?.id
-                        }
+                ],
+                
+            },
+            take:5,
+            include:{
+                stream:{
+                    select: {
+                        isLive: true
                     }
-                }
-            ],
-            
-        },
-        take:5,
-        include:{
-            stream:{
-                select: {
-                    isLive: true
                 }
             }
-        }
-    })
+        })
+    } catch (error) {
+        someCreators = await prisma.user.findMany({
+            include:{
+                stream:{
+                    select:{
+                        isLive: true,
+                    }
+                }
+            }
+        })
+    }
     return someCreators;
 }
 

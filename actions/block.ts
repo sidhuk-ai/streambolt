@@ -1,20 +1,35 @@
 "use server";
 
 import { blockUser, unBlockUser } from "@/lib/block-service"
+import { RoomServiceClient } from "livekit-server-sdk";
 import { revalidatePath } from "next/cache";
+import { getSelf } from "./user";
+
+
+const roomService = new RoomServiceClient(
+    process.env.LIVEKIT_API_URL!,
+    process.env.LIVEKIT_API_KEY!,
+    process.env.LIVEKIT_API_SECRET!
+);
 
 export const onBlock = async (id:string) => {
-    //TODO: Adapt to disconnect from livestream
-    //TODO: Allow ability to kick the guest
-    try {
-        const blocked = await blockUser(id);
-        revalidatePath("/");
+    const self = await getSelf();
+    let blocked;
 
-        revalidatePath(`/creator/${id}`);
-        return blocked;
-    } catch (error) {
-        throw new Error((error as Error).message);
+    try {
+        blocked = await blockUser(id);
+    } catch  {
+        // Yaha aaya uska matlab user ek guest hai.
     }
+
+    try {
+        await roomService.removeParticipant(self?.id as string,id)
+    } catch {
+        // this means user is not in room
+    }
+
+    revalidatePath("/dashboard/community");
+    return blocked;
 }
 
 export const onUnblock = async (id:string) => {
