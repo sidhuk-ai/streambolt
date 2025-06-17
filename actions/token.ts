@@ -9,8 +9,7 @@ export const createViewerToken = async (hostIdentity: string) => {
     let self;
 
     try{
-        const authenticated = await getSelf();
-        self = await getUserById(authenticated?.id as string);
+        self = await getSelf();
     } catch {
         const id = v4();
         const username = `guest#${Math.floor(Math.random() * 1000)}`
@@ -23,14 +22,14 @@ export const createViewerToken = async (hostIdentity: string) => {
     const isBlocked = await isBlockedByUser(host.id);
     if(isBlocked) throw new Error("You are currently blocked from viewing.");
 
-    const isHost = self.id === host.id
+    const isHost = self?.id === host.id
 
     const token = new AccessToken(
         process.env.LIVEKIT_API_KEY,
         process.env.LIVEKIT_API_SECRET,
         {
-            identity: isHost ? `host-${self.id}` : self.id,
-            name: self.username as string
+            identity: isHost ? `host-${self?.id}` : self?.id,
+            name: self?.username as string
         }
     );
     token.addGrant({
