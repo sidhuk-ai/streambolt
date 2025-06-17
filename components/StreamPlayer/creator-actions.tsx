@@ -69,9 +69,13 @@ export default function CreatorActions({
         <div className="w-full ml-1 flex flex-col items-start justify-center gap-y-2">
             <div className="mx-2 mb-4 flex gap-y-1 flex-col">
                 <h1 className="text-2xl font-semibold tracking-tight">{name}</h1>
-                <p className="text-red-500 text-sm flex items-center justify-items-start gap-x-1.5">
-                    <Users2 className="size-3.5" />
-                    {noOfParticipants} {noOfParticipants===1 ? "viewer" : "viewers"}
+                <p className="text-muted-foreground text-sm">
+                    {noOfParticipants === 0 ? "Offline" : (
+                        <span className="text-red-500 flex items-center justify-items-start gap-x-1.5">
+                            <Users2 className="size-3.5" />
+                            {noOfParticipants} {noOfParticipants === 1 ? "viewer" : "viewers"}
+                        </span>
+                    )}
                 </p>
             </div>
             <div className="flex items-start justify-between w-full">
