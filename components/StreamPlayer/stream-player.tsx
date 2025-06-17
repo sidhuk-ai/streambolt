@@ -40,7 +40,7 @@ export default function StreamPlayer({
   user,
   isFollowing,
 }: StreamPlayerProps) {
-  const { token, name, identity } = useViewerToken(user.id as string);
+  const { token, name, identity } = useViewerToken(user.id);
   const { collapsed } = useChatSidebar((state) => state);
 
   if (!token || !name || !identity) {
@@ -80,8 +80,7 @@ export default function StreamPlayer({
         </div>
         <div className={cn("2xl:col-span-2 lg:col-span-1 xl:col-span-1", collapsed && "hidden")}>
           <Chat
-            viewerName={name}
-            hostName={user.name}
+            hostName={user.username}
             hostIdentity={user.id}
             isFollowing={isFollowing}
             isChatEnabled={user.stream?.isChatEnabled}

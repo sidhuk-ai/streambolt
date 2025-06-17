@@ -11,7 +11,6 @@ import ChatList, { ChatListSkeleton } from "./chat-list";
 import ChatCommunity from "./chat-community";
 
 interface ChatPageProps {
-    viewerName: string;
     hostName: string | null;
     hostIdentity: string;
     isFollowing: boolean;
@@ -21,7 +20,6 @@ interface ChatPageProps {
 }
 
 export default function Chat({
-    viewerName,
     hostName,
     hostIdentity,
     isFollowing,
@@ -80,7 +78,7 @@ export default function Chat({
             )}
             {variant === ChatVariant.COMMUNITY && (
                 <>
-                    <ChatCommunity viewerName={viewerName} hostName={hostName} isHidden={isHidden} />
+                    <ChatCommunity hostName={hostName} isHidden={isHidden} />
                 </>
             )}
         </div>
