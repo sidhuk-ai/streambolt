@@ -33,8 +33,7 @@ export default function ChatForm({
   const [isDelayBlocked, setIsDelayBlocked] = useState(false);
 
   const isFollowersOnlyAndNotFollowing = isFollowersOnly && !isFollowing;
-  const isDisabled =
-    isHidden || isFollowersOnlyAndNotFollowing || isDelayBlocked;
+  const isDisabled = isHidden || isFollowersOnlyAndNotFollowing || isDelayBlocked;
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,9 +74,9 @@ export default function ChatForm({
           <button
             type="submit"
             disabled={isDisabled}
-            className="absolute inset-y-0 end-0 flex items-center justify-center pe-3 peer-disabled:opacity-50"
+            className="absolute inset-y-0 end-0 flex cursor-pointer items-center justify-center pe-3 group"
           >
-            <SendHorizonal size={16} className="text-green-400" />
+            <SendHorizonal size={16} className="color-brand group-disabled:opacity-50 group-disabled:cursor-not-allowed" />
           </button>
         </div>
       </div>
