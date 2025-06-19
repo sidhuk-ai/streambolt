@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Outfit } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -11,10 +11,10 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"]
+})
 
 const brand = localFont({
   src: "./fonts/brand.woff2",
@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${brand.variable} antialiased`}
+        className={`${geistSans.variable} ${outfit.variable} ${brand.variable} antialiased`}
       >
         <SessionProvider>
           <ThemeProvider attribute={"class"} defaultTheme="system" enableSystem>
