@@ -55,7 +55,7 @@ const KeysModal = () => {
         <DialogHeader>
           <DialogTitle>Generate Connection</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
+            Make changes to your stream protocol here. Click generate when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4">
@@ -69,7 +69,7 @@ const KeysModal = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Fruits</SelectLabel>
+                <SelectLabel>Ingress</SelectLabel>
                 <SelectItem value={RTMP}>RTMP</SelectItem>
                 <SelectItem value={WHIP}>WHIP</SelectItem>
               </SelectGroup>
