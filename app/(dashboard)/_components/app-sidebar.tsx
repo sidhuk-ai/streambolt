@@ -21,6 +21,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { NavUser } from "./nav-user";
+import Link from "next/link";
 
 // This is sample data.
 const data = {
@@ -66,13 +67,15 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader className="flex flex-row items-center gap-4 mt-1">
-        <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-          <Zap className="size-4" />
-        </div>
-        <div className="grid flex-1 text-left text-base">
-          <span className="truncate font-brand text-xl">Streambolt</span>
-        </div>
+      <SidebarHeader className="mt-1">
+        <Link href={'/'} className="flex flex-row items-center gap-4">
+          <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+            <Zap className="size-4" />
+          </div>
+          <div className="grid flex-1 text-left text-base">
+            <span className="truncate font-brand text-xl">Streambolt</span>
+          </div>
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
