@@ -23,13 +23,6 @@ export default function CreatorCard({ creator }: CreatorCardProps) {
           <div
             className={`relative h-20 w-20 rounded-full overflow-hidden border-2 ${isLive ? "border-red-500" : "border-transparent"}`}
           >
-            {/* <Image
-              src={avatar || "/placeholder.svg"}
-              width={200}
-              height={200}
-              alt={username}
-              className="h-full w-full object-cover transition-transform group-hover:scale-105"
-            /> */}
             <Avatar>
               <AvatarImage src={avatar || "/placeholder.svg"} width={200} height={200} alt={username} className="h-full w-full object-cover transition-transform group-hover:scale-105" />
               <AvatarFallback>{username.slice(0,2)}</AvatarFallback>

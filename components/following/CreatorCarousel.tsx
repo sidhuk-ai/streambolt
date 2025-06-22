@@ -125,6 +125,10 @@ export default function CreatorCarousel() {
             })}
           </aside>
         ) : (
+          creators.length === 0 ?
+          <div className="w-full flex items-center text-muted-foreground justify-center">
+            Follow Creators to show them here
+          </div> :
           mockCreators.map((creator) => (
             <CreatorCard key={creator.id} creator={creator} />
           ))

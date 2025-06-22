@@ -17,6 +17,7 @@ const followedStreams = Array.from({ length: 12 }).map((_, i) => ({
     ["Creative", "Digital Art", "Commission"],
     ["Recipe", "Baking", "Tutorial"],
   ][i % 5],
+  isLive: true
 }))
 
 export default function FollowedStreamList() {
