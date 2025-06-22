@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/sidebar-02";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export function NavMain() {
   const items = [
@@ -47,7 +48,7 @@ export function NavMain() {
                 tooltip={item.title}
                 isActive={pathname === item.url}
               >
-                {item.icon && <item.icon />}
+                {item.icon && <item.icon className={cn(pathname===item.url && "stroke-streambolt-400")} />}
                 <span>{item.title}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
