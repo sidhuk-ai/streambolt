@@ -1,14 +1,24 @@
-'use client'
+import Results from "@/components/search/results";
+import { redirect } from "next/navigation";
 
-import { useSearchParams } from "next/navigation"
+interface SearchPageProps {
+  searchParams: Promise<{ q?: string }>;
+}
 
-export default function SearchPage(){
-    const searchParams = useSearchParams();
-    const query = searchParams.get('q')
+export default async function SearchPage(props: SearchPageProps){
+    const { q } = await props.searchParams;
+
+    if(!q){
+        redirect('/browse');
+    }
+
     return(
     <>
-        <div className="container mt-1">
-            <h1>You searched for: {query}</h1>
+        <div className="flex flex-col min-h-screen container p-4">
+            <h1 className="2xl:text-xl">Results for &quot;{q}&quot;</h1>
+            <main className="flex-1">
+                <Results query={q} />
+            </main>
         </div>
     </>
 )}
