@@ -13,6 +13,18 @@ export function ThemeProvider({
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted) return (
+    <div className="bg-background">
+      <GlobalLoading />
+    </div>
+  );
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
+}
+
+export const GlobalLoading = () => {
+  return (
+    <div className="h-dvh w-full flex items-center justify-center">
+      Loading...
+    </div>
+  )
 }
