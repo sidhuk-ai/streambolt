@@ -8,11 +8,7 @@
 .font-brand {
   font-family: var(--font-brand);
 }
-
-.color-brand {
-  color: #1fd5f9;
-}
-
+/* 
 .bg-brand {
   background-color: oklch(80.596% 0.13938 216.392);
 }
@@ -23,7 +19,7 @@
 
 .bg-brand\/20 {
   border-color: rgba(31, 213, 249, 0.15);
-}
+} */
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar-hide::-webkit-scrollbar {
@@ -73,17 +69,6 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --color-sky-blue-50: var(--color-sky-blue-50);
-  --color-sky-blue-100: var(--color-sky-blue-100);
-  --color-sky-blue-200: var(--color-sky-blue-200);
-  --color-sky-blue-300: var(--color-sky-blue-300);
-  --color-sky-blue-400: var(--color-sky-blue-400);
-  --color-sky-blue-500: var(--color-sky-blue-500);
-  --color-sky-blue-600: var(--color-sky-blue-600);
-  --color-sky-blue-700: var(--color-sky-blue-700);
-  --color-sky-blue-800: var(--color-sky-blue-800);
-  --color-sky-blue-900: var(--color-sky-blue-900);
-  --color-sky-blue-950: var(--color-sky-blue-950);
   --color-streambolt-50: oklch(97.28% 0.018 223.53);
   --color-streambolt-100: oklch(95.49% 0.029 223.71);
   --color-streambolt-200: oklch(89.91% 0.069 220.83);
