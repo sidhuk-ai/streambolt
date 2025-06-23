@@ -57,7 +57,7 @@ export default function StreamPlayer({
           collapsed && "lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2"
         )}
       >
-        <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto scrollbar-hide pb-10">
+        <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 overflow-x-hidden lg:overflow-y-auto scrollbar-hide pb-10">
           <Video
             hostName={user.name as string}
             hostIdentity={user.id as string}
@@ -78,7 +78,7 @@ export default function StreamPlayer({
             thumbnailUrl={user.stream?.thumbnailUrl}
           />
         </div>
-        <div className={cn("2xl:col-span-2 lg:col-span-1 xl:col-span-1", collapsed && "hidden")}>
+        <div className={cn("2xl:col-span-2 lg:col-span-1 xl:col-span-1 lg:max-h-1/2", collapsed && "hidden")}>
           <Chat
             hostName={user.username}
             hostIdentity={user.id}
