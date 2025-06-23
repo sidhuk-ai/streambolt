@@ -1,64 +1,180 @@
-import Image from "next/image"
-import { Play } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
+"use client";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { SplitText } from "gsap/all";
+import Link from "next/link";
 
 export default function Hero() {
+  useGSAP(() => {
+    const stream = SplitText.create(".stream", {
+      type: "chars",
+    });
+    const bolt = SplitText.create(".bolt", {
+      type: "chars",
+    });
+    const para = SplitText.create(".sub-heading p", {
+      type: "words, lines",
+    });
+
+    const t1 = gsap.timeline({
+      delay: 1,
+    });
+
+    t1.to(".content", {
+      opacity: 1,
+      y: 0,
+      ease: "power1.inOut",
+    })
+      .to(
+        ".text-scroll",
+        {
+          duration: 1,
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          ease: "circ.out",
+        },
+        "-=0.5"
+      )
+      .from(
+        stream.chars,
+        {
+          yPercent: 200,
+          stagger: 0.02,
+          ease: "power2.out",
+        },
+        "-=0.5"
+      )
+      .from(
+        bolt.chars,
+        {
+          yPercent: -100,
+          stagger: 0.02,
+          ease: "power2.out",
+        },
+        "-=0.5"
+      )
+      .from(
+        para.lines,
+        {
+          rotationX: -100,
+          transformOrigin: "50% 50% -160px",
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3",
+          stagger: 0.25,
+        },
+        "-=0.5"
+      )
+      .fromTo(
+        ".button-group",
+        { opacity: 0, y: 40, scale: 0.9 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1,
+          ease: "power3.out",
+        },
+        "-=0.5"
+      );
+  });
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted">
-      <div className="container px-4 md:px-6">
-        <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_500px]">
-          <div className="flex flex-col justify-center space-y-4">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                <span className="font-brand tracking-wide">Stream</span> Live to the World
+    <section className="relative mx-auto overflow-hidden section-content">
+      <div className="content w-full py-12 md:py-24 lg:py-16 translate-y-10 opacity-0 flex justify-center items-center flex-col gap-y-2 size-full">
+        <div className="mb-8">
+          <div className="relative z-10 w-full h-full flex flex-col 2xl:justify-center items-center translate-y-10 2xl:pt-0 md:pt-32 pt-24">
+            <div className="">
+              <h1 className="stream overflow-hidden 2xl:text-9xl md:text-[6.5rem] text-[3.3rem] font-bold 2xl:mb-0 mb-5">
+                <span className="font-brand">Stream</span> Beyond
               </h1>
-              <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                Start your live stream in seconds and connect with viewers around the globe. Share your passion, build
-                your community.
-              </p>
             </div>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button size="lg" className="gap-1.5 cursor-pointer">
-                <Play className="h-4 w-4" />
-                Start Streaming
-              </Button>
-              <Link href={'/browse'}>
-              <Button variant="outline" className="cursor-pointer bg-gray-300" size="lg">
-                Browse Streams
-              </Button>
-              </Link>
+            <div
+              style={{ clipPath: "polygon(50% 0, 50% 0, 50% 100%, 50% 100%)" }}
+              className="-rotate-3 z-10 border-[.5vw] border-background bg-[#1fd5f9] text-scroll px-2 w-fit"
+            >
+              <h1 className="uppercase 2xl:text-9xl md:text-[6.5rem] text-[3.3rem] font-bold 2xl:px-[1.2vw] px-3 2xl:pb-[1vw] pb-5 2xl:py-0 py-3">
+                Boundaries
+              </h1>
             </div>
+            <h1 className="bolt overflow-hidden 2xl:text-9xl md:text-[6.5rem] text-[3.3rem] font-bold 2xl:mb-0 mb-5">
+              Create With <span className="font-brand">Bolt</span>
+            </h1>
           </div>
-          <div className="mx-auto flex w-full max-w-[400px] flex-col justify-center">
-            <div className="relative aspect-video overflow-hidden rounded-xl border bg-muted">
-              <Image
-                src="/placeholder.svg?height=720&width=1280"
-                width={1280}
-                height={720}
-                priority
-                alt="StreamBolt Preview"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Button size="icon" variant="secondary" className="h-12 w-12 rounded-full">
-                  <Play className="h-6 w-6" />
-                  <span className="sr-only">Play video</span>
-                </Button>
-              </div>
-              <div className="absolute bottom-2 left-2 flex items-center gap-1.5 rounded-md bg-background/80 px-2 py-1 backdrop-blur">
-                <Badge variant="secondary" className="gap-1 bg-red-500 text-white hover:bg-red-500/90">
-                  <span className="h-2 w-2 rounded-full bg-white animate-pulse" />
-                  LIVE
-                </Badge>
-                <span className="text-xs font-medium">12.4K viewers</span>
-              </div>
-            </div>
-          </div>
+        </div>
+        <div className="sub-heading my-6">
+          <p className="text-2xl text-center lg:max-w-2xl text-muted-foreground">
+            Spin up a live Ingress, link it to OBS or any RTMP-compatible
+            broadcaster, and start pushing high-quality, low-latency streams—no
+            extra configuration needed.
+          </p>
+        </div>
+        <div className="button-group">
+          <Link href={"/browse"}>
+            <button className="Btn-Container">
+              <span className="text capitalize">let's go!</span>
+              <span className="icon-Container">
+                <svg
+                  width="16"
+                  height="19"
+                  viewBox="0 0 16 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="1.61321"
+                    cy="1.61321"
+                    r="1.5"
+                    fill="black"
+                  ></circle>
+                  <circle
+                    cx="5.73583"
+                    cy="1.61321"
+                    r="1.5"
+                    fill="black"
+                  ></circle>
+                  <circle
+                    cx="5.73583"
+                    cy="5.5566"
+                    r="1.5"
+                    fill="black"
+                  ></circle>
+                  <circle
+                    cx="9.85851"
+                    cy="5.5566"
+                    r="1.5"
+                    fill="black"
+                  ></circle>
+                  <circle cx="9.85851" cy="9.5" r="1.5" fill="black"></circle>
+                  <circle cx="13.9811" cy="9.5" r="1.5" fill="black"></circle>
+                  <circle
+                    cx="5.73583"
+                    cy="13.4434"
+                    r="1.5"
+                    fill="black"
+                  ></circle>
+                  <circle
+                    cx="9.85851"
+                    cy="13.4434"
+                    r="1.5"
+                    fill="black"
+                  ></circle>
+                  <circle
+                    cx="1.61321"
+                    cy="17.3868"
+                    r="1.5"
+                    fill="black"
+                  ></circle>
+                  <circle
+                    cx="5.73583"
+                    cy="17.3868"
+                    r="1.5"
+                    fill="black"
+                  ></circle>
+                </svg>
+              </span>
+            </button>
+          </Link>
         </div>
       </div>
     </section>
-  )
+  );
 }
-
