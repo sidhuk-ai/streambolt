@@ -52,12 +52,11 @@ export default function Navbar() {
             href={"/"}
             className="nav-header flex justify-center items-center gap-2 md:mx-4"
           >
-            <Zap className="hover:animate-pulse" />
-            <span className="font-bold font-brand text-xl hidden md:block">
-              Stream
+            <span className="font-bold font-brand text-2xl hidden md:block">
+              BOLT
             </span>
           </Link>
-          <div className="flex items-center gap-6 md:gap-10">
+          {/* <div className="flex items-center gap-6 md:gap-10">
             <nav className="hidden gap-6 md:flex">
               <Link
                 href="/browse"
@@ -93,7 +92,7 @@ export default function Navbar() {
                 Following
               </Link>
             </nav>
-          </div>
+          </div> */}
           <div className="flex flex-1 items-center space-x-4 justify-end">
             <div className="relative hidden w-full max-w-sm md:flex">
               <SearchBar url="/search" />
@@ -116,14 +115,9 @@ export default function Navbar() {
                     <Button
                       variant={"outline"}
                       size="sm"
-                      className="cursor-pointer hidden md:flex"
+                      className="cursor-pointer hidden md:flex rounded-full"
                     >
                       Log in
-                    </Button>
-                  </Link>
-                  <Link href={"/sign-up"}>
-                    <Button size="sm" className="cursor-pointer hidden md:flex">
-                      Sign up
                     </Button>
                   </Link>
                   <span className="md:hidden">
@@ -176,7 +170,7 @@ function DrawerMenu() {
 function Dropdown({ session }: { session: Session }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger className="cursor-pointer" asChild>
         <Avatar className="w-9 h-9">
           <AvatarImage
             src={session?.user?.image ?? ""}
