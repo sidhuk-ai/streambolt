@@ -24,7 +24,7 @@ export default function SignUpPage() {
       <div className="flex-1 flex items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center md:text-left">
-            <Button variant={"ghost"} className="rounded-full mr-3 h-10 w-10" onClick={()=>router.back()} >
+            <Button variant={"ghost"} className="rounded-full mr-3 h-10 w-10" onClick={()=>router.push('/browse')} >
               <ArrowLeft className="h-10 w-10" />
             </Button>
             <Link href="/" className="inline-flex items-center mb-6 text-2xl font-semibold">
@@ -52,7 +52,7 @@ export default function SignUpPage() {
               <div className="flex gap-4">
                 <div className="space-y-2 w-full">
                   <Label htmlFor="firstName">First Name</Label>
-                  <Input id="firstName" name="firstName" type="text" autoComplete="first-name" placeholder="John" />
+                  <Input id="firstName" name="firstName" type="text" autoComplete="first-name" placeholder="John" required />
                 </div>
                 <div className="space-y-2 w-full">
                   <Label htmlFor="lastName">Last Name</Label>
@@ -62,7 +62,7 @@ export default function SignUpPage() {
               {/* Email field */}
               <div className="space-y-2">
                 <Label htmlFor="email">Email Address</Label>
-                <Input id="email" name="email" type="email" autoComplete="email" placeholder="john.doe@example.com" />
+                <Input id="email" name="email" type="email" autoComplete="email" placeholder="john.doe@example.com" required />
               </div>
 
               {/* Password field */}
@@ -75,6 +75,7 @@ export default function SignUpPage() {
                     type={showPassword ? "text" : "password"}
                     autoComplete="new-password"
                     placeholder="••••••••"
+                    required
                   />
                   <Button
                     type="button"
@@ -103,6 +104,7 @@ export default function SignUpPage() {
                     type={showConfirmPassword ? "text" : "password"}
                     autoComplete="new-password"
                     placeholder="••••••••"
+                    required
                   />
                   <Button
                     type="button"
@@ -122,7 +124,7 @@ export default function SignUpPage() {
               </div>
 
               {/* Terms and conditions */}
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <div className="flex items-start">
                   <Checkbox id="terms" name="terms" className="mt-1" />
                   <Label htmlFor="terms" className="ml-2 text-sm font-normal leading-tight">
@@ -136,7 +138,7 @@ export default function SignUpPage() {
                     </Link>
                   </Label>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <Button type="submit" className="w-full">
@@ -144,17 +146,18 @@ export default function SignUpPage() {
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
 
-            <div className="relative">
+            {/* TODO: Adding Google Authentication. */}
+            {/* <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <Separator className="w-full" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
               </div>
-            </div>
+            </div> */}
 
             <div className="grid grid-cols-1 gap-4">
-              <Button variant="outline" type="button" className="w-full">
+              {/* <Button variant="outline" type="button" className="w-full">
                 <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                   <path
                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -174,7 +177,7 @@ export default function SignUpPage() {
                   />
                 </svg>
                 Google
-              </Button>
+              </Button> */}
               {/* <Button variant="outline" type="button" className="w-full">
                 <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z" />
@@ -210,7 +213,7 @@ export default function SignUpPage() {
                 "StreamBolt has completely transformed how I connect with my audience. The platform is intuitive and
                 powerful."
               </p>
-              <footer className="text-sm text-muted-foreground">— Sarah Johnson, Content Creator</footer>
+              <footer className="text-sm text-muted-foreground"> ~ Binod, Content Creator</footer>
             </blockquote>
           </div>
         </div>
