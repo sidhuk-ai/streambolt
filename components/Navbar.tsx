@@ -5,6 +5,7 @@ import { ModeToggle } from "@/components/ThemeToggler";
 import SearchBar from "@/components/ui/search-input";
 import { signOut, useSession } from "next-auth/react";
 import {
+  ArrowRight,
   ChartNoAxesCombined,
   Clapperboard,
   Globe,
@@ -17,7 +18,6 @@ import {
   UserPen,
   UserRoundPlus,
   Users,
-  Zap,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -111,15 +111,15 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  <Link href={"/login"}>
-                    <Button
-                      variant={"outline"}
-                      size="sm"
-                      className="cursor-pointer hidden md:flex rounded-full"
-                    >
-                      Log in
-                    </Button>
-                  </Link>
+                  <Button
+                    asChild
+                    className="group transition-all duration-300 rounded-full ease-in-out transform hover:scale-105 hover:bg-primary/90 hover:shadow-lg"
+                  >
+                    <Link href="/login">
+                      Login
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </Link>
+                  </Button>
                   <span className="md:hidden">
                     <DrawerMenu />
                   </span>
@@ -129,7 +129,7 @@ export default function Navbar() {
           </div>
         </div>
       </header>
-      <BottomNav />
+      <BottomNav paths={pathname} />
     </>
   );
 }
@@ -208,7 +208,10 @@ function Dropdown({ session }: { session: Session }) {
             </DropdownMenuItem>
           </Link>
           <DropdownMenuSeparator className="my-2" />
-          <DropdownMenuItem variant={"destructive"} onClick={() => signOut({ redirectTo: "/" })}>
+          <DropdownMenuItem
+            variant={"destructive"}
+            onClick={() => signOut({ redirectTo: "/" })}
+          >
             <LogOut />
             <span className="font-medium pb-0.5">Log Out</span>
           </DropdownMenuItem>
@@ -218,23 +221,23 @@ function Dropdown({ session }: { session: Session }) {
   );
 }
 
-function BottomNav() {
+function BottomNav({ paths } : { paths: string }) {
   return (
     <div className="flex z-50 fixed bottom-0 md:hidden w-full justify-between items-center p-4 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t">
-      <Link href={"/"} className="flex flex-col items-center">
-        <House />
+      <Link href={"/"} className="flex flex-col items-center transition">
+        <House className={cn(paths === '/' && "fill-accent-foreground stroke-accent")} />
         <span className="text-xs">Home</span>
       </Link>
       <Link href={"/browse"} className="flex flex-col items-center">
-        <Globe />
+        <Globe  className={cn(paths === '/browse' && "fill-accent-foreground stroke-accent")} />
         <span className="text-xs">Browse</span>
       </Link>
       <Link href={"/categories"} className="flex flex-col items-center">
-        <LayoutGrid />
+        <LayoutGrid  className={cn(paths === '/categories' && "fill-accent-foreground stroke-0")} />
         <span className="text-xs">Categories</span>
       </Link>
       <Link href={"/following"} className="flex flex-col items-center">
-        <Users />
+        <Users className={cn(paths === '/following' && "fill-accent-foreground stroke-0")} />
         <span className="text-xs">Following</span>
       </Link>
     </div>
