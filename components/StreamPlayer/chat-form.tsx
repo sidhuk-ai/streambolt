@@ -34,6 +34,7 @@ export default function ChatForm({
 
   const isFollowersOnlyAndNotFollowing = isFollowersOnly && !isFollowing;
   const isDisabled = isHidden || isFollowersOnlyAndNotFollowing || isDelayBlocked;
+  console.log(isHidden, isFollowersOnlyAndNotFollowing, isDelayBlocked)
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,6 +47,7 @@ export default function ChatForm({
       setTimeout(() => {
         onSubmit();
       }, 3000);
+      setIsDelayBlocked(false);
     } else {
       onSubmit();
     }
@@ -76,7 +78,7 @@ export default function ChatForm({
             disabled={isDisabled}
             className="absolute inset-y-0 end-0 flex cursor-pointer items-center justify-center pe-3 group"
           >
-            <SendHorizonal size={16} className="color-brand group-disabled:opacity-50 group-disabled:cursor-not-allowed" />
+            <SendHorizonal size={16} className="text-streambolt-400 group-disabled:opacity-50 group-disabled:cursor-not-allowed" />
           </button>
         </div>
       </div>
@@ -134,7 +136,7 @@ const ChatInfo = ({ isDelayed, isFollowersOnly }: ChatInfoProps) => {
   }
 
   return (
-    <div className="p-2 text-muted-foreground bg-brand/15 border-brand/20 dark:bg-white/5 dark:border-white/10 w-full rounded-t-md flex items-center gap-x-2">
+    <div className="p-2 text-muted-foreground bg-streambolt-400/15 border-streambolt-400/20 dark:bg-white/5 dark:border-white/10 w-full rounded-t-md flex items-center gap-x-2">
       <Tooltip>
         <TooltipTrigger asChild>
           <Info className="h-4 w-4" />
