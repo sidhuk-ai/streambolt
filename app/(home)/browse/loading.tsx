@@ -5,7 +5,7 @@ const Loading = () => {
   return (
     <div className='flex min-h-screen flex-col'>
         <div className='flex-1'>
-            <div className='container py-6 md:px-6'>
+            <div className='py-6 md:px-6'>
                 <div className="flex flex-nowrap gap-2.5 mb-6 overflow-x-hidden justify-center items-center py-2">
                     {Array.from({ length: 12 }).map((_, i) =>{
                         return (
