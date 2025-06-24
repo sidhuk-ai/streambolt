@@ -128,7 +128,8 @@ export const getAllCreators = async () => {
                         isLive: true,
                     }
                 }
-            }
+            },
+            take: 5
         })
     }
     return someCreators;
