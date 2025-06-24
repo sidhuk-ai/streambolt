@@ -8,7 +8,7 @@ interface ResultsProps {
 export default async function Results({ query }: ResultsProps) {
   const data = await searchService(query);
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="flex container flex-col gap-y-4">
       {data.length === 0 ? (
         <div className="text-sm text-muted-foreground m-4">
           No results found. Try searching for something else.
