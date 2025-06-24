@@ -1,12 +1,12 @@
 "use client";
 
 import {
-  BadgeCheck,
-  Bell,
   ChevronsUpDown,
-  CreditCard,
+  Laptop,
   LogOut,
+  Moon,
   Sparkles,
+  Sun,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -28,10 +28,12 @@ import {
 import { signOut } from "@/auth";
 import { useSession } from "next-auth/react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTheme } from "next-themes";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
   const { data: session, status } = useSession();
+  const theme = useTheme();
 
   if (status === "loading") {
     return (
@@ -97,25 +99,21 @@ export function NavUser() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
+            <DropdownMenuLabel className="text-sm font-semibold text-muted-foreground">
+              Theme
+            </DropdownMenuLabel>
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
+              <DropdownMenuItem onClick={() => theme.setTheme('light')}>
+                <Sun />
+                Light
               </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
+              <DropdownMenuItem onClick={() => theme.setTheme('dark')}>
+                <Moon />
+                Dark
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
+              <DropdownMenuItem onClick={() => theme.setTheme('system')}>
+                <Laptop />
+                System
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
