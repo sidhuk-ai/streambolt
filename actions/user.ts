@@ -144,6 +144,7 @@ export const getUserById = async (id:string) => {
             imageUrl: true,
             username: true,
             createdAt: true,
+            emailVerified: true,
             stream: {
                 select:{
                     name: true,
@@ -160,4 +161,38 @@ export const getUserById = async (id:string) => {
     if(!user) throw new Error("User Doesn't Exists.");
 
     return user;
+}
+
+export const updateUserValues = async (formData: FormData) => {
+    try {
+        const self = await getSelf();
+
+        if(!self) return;
+
+        const validData = {
+            name: formData.get('name') as string,
+            username: formData.get('username') as string
+        }
+
+        const updatedData = await prisma.user.update({
+            where:{
+                id: self.id
+            },
+            data: {
+                ...validData
+            },
+            select: {
+                id: true
+            }
+        })
+
+        if(!updatedData) return {msg: "Updation failed."}
+
+        revalidatePath('/dashboard/settings');
+        revalidatePath(`/stream/${updatedData.id}`);
+        revalidatePath(`/creator/${updatedData.id}`)
+        return;
+    } catch (error) {
+        return;
+    }
 }
