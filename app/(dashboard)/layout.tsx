@@ -7,16 +7,16 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Dashboard – Streambolt",
+  title: "Account – Streambolt",
   description:
     "Manage your livestreams, track analytics, and interact with your audience in the Streambolt dashboard.",
   openGraph: {
-    title: "Dashboard – Streambolt",
+    title: "Account – Streambolt",
     description: "All your livestream tools in one place.",
     siteName: "Streambolt",
   },
   twitter: {
-    title: "Dashboard – Streambolt",
+    title: "Account – Streambolt",
     description: "Control your livestreams and content from the dashboard.",
   },
 };
