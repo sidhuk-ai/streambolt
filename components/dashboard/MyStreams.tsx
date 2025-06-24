@@ -1,13 +1,26 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Edit, MoreHorizontal, Play, Plus, Trash2, Video, VideoOff } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
+import { useState } from "react";
+import {
+  Edit,
+  MoreHorizontal,
+  Play,
+  Plus,
+  Trash2,
+  Video,
+  VideoOff,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,9 +28,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import DashboardHeader from "@/components/dashboard/DashboardHeader"
-import Image from "next/image"
+} from "@/components/ui/dropdown-menu";
+import Image from "next/image";
 
 // Mock data for streams
 const liveStreams = [
@@ -29,7 +41,7 @@ const liveStreams = [
     viewers: 1250,
     thumbnail: "/placeholder.svg?height=720&width=1280&text=Gaming+Stream",
   },
-]
+];
 
 const pastStreams = [
   {
@@ -59,7 +71,7 @@ const pastStreams = [
     views: 3600,
     thumbnail: "/placeholder.svg?height=720&width=1280&text=Music+Stream",
   },
-]
+];
 
 const scheduledStreams = [
   {
@@ -83,125 +95,130 @@ const scheduledStreams = [
     scheduledFor: "Not scheduled",
     status: "draft",
   },
-]
+];
 
 export default function MyStreams() {
-  const [activeTab, setActiveTab] = useState("live")
+  const [activeTab, setActiveTab] = useState("live");
 
   return (
-    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
-      <DashboardHeader heading="My Streams" text="Manage your live, past, and scheduled streams">
-        <Button className="gap-1">
-          <Plus className="h-4 w-4" />
-          New Stream
-        </Button>
-      </DashboardHeader>
-
-      <Tabs defaultValue="live" onValueChange={setActiveTab} value={activeTab}>
-        <TabsList>
-          <TabsTrigger value="live" className="relative">
-            Live
-            {liveStreams.length > 0 && (
-              <Badge className="ml-2 bg-red-500 hover:bg-red-500/90 px-1 py-0 text-[10px]">{liveStreams.length}</Badge>
-            )}
-          </TabsTrigger>
-          <TabsTrigger value="past">Past</TabsTrigger>
-          <TabsTrigger value="scheduled">
-            Scheduled
-            {scheduledStreams.filter((s) => s.status === "scheduled").length > 0 && (
-              <Badge className="ml-2 px-1 py-0 text-[10px]">
-                {scheduledStreams.filter((s) => s.status === "scheduled").length}
-              </Badge>
-            )}
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="live" className="space-y-4">
-          {liveStreams.length > 0 ? (
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {liveStreams.map((stream) => (
-                <LiveStreamCard key={stream.id} stream={stream} />
-              ))}
-            </div>
-          ) : (
-            <EmptyState
-              icon={<VideoOff className="h-8 w-8 text-muted-foreground" />}
-              title="No Live Streams"
-              description="You don't have any active streams right now."
-              action={
-                <Button>
-                  <Play className="mr-2 h-4 w-4" />
-                  Go Live Now
-                </Button>
-              }
-            />
+    <Tabs defaultValue="live" onValueChange={setActiveTab} value={activeTab}>
+      <TabsList>
+        <TabsTrigger value="live" className="relative">
+          Live
+          {liveStreams.length > 0 && (
+            <Badge className="ml-2 bg-red-500 hover:bg-red-500/90 px-1 py-0 text-[10px]">
+              {liveStreams.length}
+            </Badge>
           )}
-        </TabsContent>
-
-        <TabsContent value="past" className="space-y-4">
-          {pastStreams.length > 0 ? (
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {pastStreams.map((stream) => (
-                <PastStreamCard key={stream.id} stream={stream} />
-              ))}
-            </div>
-          ) : (
-            <EmptyState
-              icon={<Video className="h-8 w-8 text-muted-foreground" />}
-              title="No Past Streams"
-              description="Your previous streams will appear here."
-            />
+        </TabsTrigger>
+        <TabsTrigger value="past">Past</TabsTrigger>
+        <TabsTrigger value="scheduled">
+          Scheduled
+          {scheduledStreams.filter((s) => s.status === "scheduled").length >
+            0 && (
+            <Badge className="ml-2 px-1 py-0 text-[10px]">
+              {scheduledStreams.filter((s) => s.status === "scheduled").length}
+            </Badge>
           )}
-        </TabsContent>
+        </TabsTrigger>
+      </TabsList>
 
-        <TabsContent value="scheduled" className="space-y-4">
-          {scheduledStreams.length > 0 ? (
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {scheduledStreams.map((stream) => (
-                <ScheduledStreamCard key={stream.id} stream={stream} />
-              ))}
-            </div>
-          ) : (
-            <EmptyState
-              icon={<Video className="h-8 w-8 text-muted-foreground" />}
-              title="No Scheduled Streams"
-              description="You haven't scheduled any streams yet."
-              action={
-                <Button>
-                  <Plus className="mr-2 h-4 w-4" />
-                  Schedule Stream
-                </Button>
-              }
-            />
-          )}
-        </TabsContent>
-      </Tabs>
-    </div>
-  )
+      <TabsContent value="live" className="space-y-4">
+        {liveStreams.length > 0 ? (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {liveStreams.map((stream) => (
+              <LiveStreamCard key={stream.id} stream={stream} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            icon={<VideoOff className="h-8 w-8 text-muted-foreground" />}
+            title="No Live Streams"
+            description="You don't have any active streams right now."
+            action={
+              <Button>
+                <Play className="mr-2 h-4 w-4" />
+                Go Live Now
+              </Button>
+            }
+          />
+        )}
+      </TabsContent>
+
+      <TabsContent value="past" className="space-y-4">
+        {pastStreams.length > 0 ? (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {pastStreams.map((stream) => (
+              <PastStreamCard key={stream.id} stream={stream} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            icon={<Video className="h-8 w-8 text-muted-foreground" />}
+            title="No Past Streams"
+            description="Your previous streams will appear here."
+          />
+        )}
+      </TabsContent>
+
+      <TabsContent value="scheduled" className="space-y-4">
+        {scheduledStreams.length > 0 ? (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {scheduledStreams.map((stream) => (
+              <ScheduledStreamCard key={stream.id} stream={stream} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            icon={<Video className="h-8 w-8 text-muted-foreground" />}
+            title="No Scheduled Streams"
+            description="You haven't scheduled any streams yet."
+            action={
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                Schedule Stream
+              </Button>
+            }
+          />
+        )}
+      </TabsContent>
+    </Tabs>
+  );
 }
 
 interface LiveStreamCardProps {
   stream: {
-    id: string
-    title: string
-    category: string
-    startedAt: string
-    viewers: number
-    thumbnail: string
-  }
+    id: string;
+    title: string;
+    category: string;
+    startedAt: string;
+    viewers: number;
+    thumbnail: string;
+  };
 }
 
 function LiveStreamCard({ stream }: LiveStreamCardProps) {
   return (
     <Card>
       <div className="relative aspect-video overflow-hidden">
-        <Image src={stream.thumbnail || "/placeholder.svg"} alt={stream.title} width={100} height={100} className="!h-full !w-full rounded-t-lg object-cover" />
+        <Image
+          src={stream.thumbnail || "/placeholder.svg"}
+          alt={stream.title}
+          width={100}
+          height={100}
+          className="!h-full !w-full rounded-t-lg object-cover"
+        />
         <div className="absolute bottom-2 left-2 flex items-center gap-1.5 rounded-md bg-background/80 px-2 py-1 backdrop-blur">
-          <Badge variant="secondary" className="gap-1 bg-red-500 text-white hover:bg-red-500/90">
+          <Badge
+            variant="secondary"
+            className="gap-1 bg-red-500 text-white hover:bg-red-500/90"
+          >
             <span className="h-2 w-2 rounded-full bg-white animate-pulse" />
             LIVE
           </Badge>
-          <span className="text-xs font-medium">{stream.viewers.toLocaleString()}</span>
+          <span className="text-xs font-medium">
+            {stream.viewers.toLocaleString()}
+          </span>
         </div>
       </div>
       <CardContent className="p-4">
@@ -233,7 +250,9 @@ function LiveStreamCard({ stream }: LiveStreamCardProps) {
             <Badge variant="outline" className="rounded-sm px-1 py-0 text-xs">
               {stream.category}
             </Badge>
-            <span className="text-xs text-muted-foreground">Started {stream.startedAt}</span>
+            <span className="text-xs text-muted-foreground">
+              Started {stream.startedAt}
+            </span>
           </div>
           <div className="flex justify-between pt-2">
             <Button size="sm" variant="outline">
@@ -246,26 +265,32 @@ function LiveStreamCard({ stream }: LiveStreamCardProps) {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 interface PastStreamCardProps {
   stream: {
-    id: string
-    title: string
-    category: string
-    date: string
-    duration: string
-    views: number
-    thumbnail: string
-  }
+    id: string;
+    title: string;
+    category: string;
+    date: string;
+    duration: string;
+    views: number;
+    thumbnail: string;
+  };
 }
 
 function PastStreamCard({ stream }: PastStreamCardProps) {
   return (
     <Card>
       <div className="relative aspect-video overflow-hidden">
-        <Image src={stream.thumbnail || "/placeholder.svg"} alt={stream.title} height={100} width={100} className="!h-full !w-full object-cover" />
+        <Image
+          src={stream.thumbnail || "/placeholder.svg"}
+          alt={stream.title}
+          height={100}
+          width={100}
+          className="!h-full !w-full object-cover"
+        />
       </div>
       <CardContent className="p-4">
         <div className="space-y-2">
@@ -312,17 +337,17 @@ function PastStreamCard({ stream }: PastStreamCardProps) {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 interface ScheduledStreamCardProps {
   stream: {
-    id: string
-    title: string
-    category: string
-    scheduledFor: string
-    status: string
-  }
+    id: string;
+    title: string;
+    category: string;
+    scheduledFor: string;
+    status: string;
+  };
 }
 
 function ScheduledStreamCard({ stream }: ScheduledStreamCardProps) {
@@ -362,7 +387,9 @@ function ScheduledStreamCard({ stream }: ScheduledStreamCardProps) {
               {stream.category}
             </Badge>
             {stream.status === "scheduled" ? (
-              <Badge className="rounded-sm px-1 py-0 text-xs bg-green-500 hover:bg-green-500/90">Scheduled</Badge>
+              <Badge className="rounded-sm px-1 py-0 text-xs bg-green-500 hover:bg-green-500/90">
+                Scheduled
+              </Badge>
             ) : (
               <Badge variant="outline" className="rounded-sm px-1 py-0 text-xs">
                 Draft
@@ -384,14 +411,14 @@ function ScheduledStreamCard({ stream }: ScheduledStreamCardProps) {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 interface EmptyStateProps {
-  icon: React.ReactNode
-  title: string
-  description: string
-  action?: React.ReactNode
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  action?: React.ReactNode;
 }
 
 function EmptyState({ icon, title, description, action }: EmptyStateProps) {
@@ -404,7 +431,7 @@ function EmptyState({ icon, title, description, action }: EmptyStateProps) {
         {action}
       </CardContent>
     </Card>
-  )
+  );
 }
 
 function CalendarClock(props: React.SVGProps<SVGSVGElement>) {
@@ -428,6 +455,5 @@ function CalendarClock(props: React.SVGProps<SVGSVGElement>) {
       <path d="M17.5 17.5 16 16.25V14" />
       <path d="M22 16a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z" />
     </svg>
-  )
+  );
 }
-
