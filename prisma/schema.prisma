@@ -14,9 +14,10 @@ model User {
   email         String    @unique
   name          String?
   updatedAt     DateTime  @updatedAt
-  imageUrl      String?
-  password      String?
-  username      String?
+  imageUrl      String
+  password      String
+  username      String    @unique
+  bio           String?   @db.Text
   emailVerified DateTime?
   blockedBy     Block[]   @relation("BlockedBy")
   blocking      Block[]   @relation("Blocking")
