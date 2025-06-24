@@ -10,6 +10,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@bprogress/next": "^3.2.12",
     "@gsap/react": "^2.1.2",
     "@livekit/components-react": "^2.9.9",
     "@prisma/client": "^6.9.0",
