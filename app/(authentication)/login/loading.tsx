@@ -33,18 +33,6 @@ export default function LoginLoading() {
                   {/* Login Button */}
                   <Skeleton className="h-10 w-full bg-primary/80" />
 
-                  {/* Divider */}
-                  <div className="relative text-center text-sm">
-                    <Skeleton className="h-4 w-32 mx-auto bg-muted-foreground" />
-                  </div>
-
-                  {/* Social Login Buttons */}
-                  <div className="grid grid-cols-3 gap-4">
-                    <Skeleton className="h-10 w-full bg-muted-foreground" />
-                    <Skeleton className="h-10 w-full bg-muted-foreground" />
-                    <Skeleton className="h-10 w-full bg-muted-foreground" />
-                  </div>
-
                   {/* Signup Link */}
                   <div className="text-center text-sm">
                     <Skeleton className="h-4 w-48 mx-auto bg-muted-foreground" />
