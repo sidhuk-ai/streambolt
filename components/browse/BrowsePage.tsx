@@ -24,7 +24,7 @@ export default function BrowsePage() {
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
-        <div className="container px-4 py-6 md:px-6">
+        <div className="px-4 py-6 md:px-6">
           <TagCarousel tags={tags} />
           <StreamList />
         </div>
