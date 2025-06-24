@@ -14,7 +14,8 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import KeysModal from "./keys-modal";
-import { Key, Link2, SquarePen } from "lucide-react";
+import { CheckIcon, Copy, Key, Link2, SquarePen } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 type Props = {
   streamKey: string | null;
@@ -23,10 +24,38 @@ type Props = {
 interface KeysContentProps {
   keys: Props | null;
 }
+enum Target {
+  KEY = "KEY",
+  URL = "URL"
+}
 
 export default function KeysContent({ keys }: KeysContentProps) {
   const [autoRecord, setAutoRecord] = useState(true);
   const [show, setShow] = useState(false);
+  const [keyCopied, setKeyCopied] = useState(false);
+  const [urlCopied, setUrlCopied] = useState(false)
+
+  const onCopy = (target: Target) => {
+    if(target === Target.KEY) {
+      navigator.clipboard.writeText(keys?.streamKey as string).then(() => {
+      setKeyCopied(true);
+      setTimeout(() => {
+        setKeyCopied(false);
+      },3000);
+    });
+    }
+    else if(target === Target.URL){
+      navigator.clipboard.writeText(keys?.serverUrl as string).then(() => {
+        setUrlCopied(true);
+        setTimeout(() => {
+          setUrlCopied(false);
+        },3000)
+      })
+    }
+    else{
+      return;
+    }
+  }
 
   return (
     <div className="space-y-4">
@@ -54,13 +83,22 @@ export default function KeysContent({ keys }: KeysContentProps) {
                   id="stream-key"
                   type={show ? "text" : "password"}
                   defaultValue={keys?.streamKey ?? "No stream key found."}
-                  className="w-full rounded-lg bg-background pl-8"
+                  className="w-full rounded-lg bg-background px-8"
                   readOnly
                 />
+                <div className="absolute bottom-1 right-2.5">
+                  <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant={"ghost"} onClick={() => onCopy(Target.KEY)} size={"sm"} className="size-6 p-0.5">
+                      {keyCopied ? <CheckIcon className="size-4" /> : <Copy className="size-4" />}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {keyCopied ? "Copied" : "Copy"}
+                  </TooltipContent>
+                  </Tooltip>
+                </div>
               </div>
-              <Button variant="outline" size="sm">
-                Copy
-              </Button>
               <Button
                 variant="outline"
                 size="sm"
@@ -87,6 +125,18 @@ export default function KeysContent({ keys }: KeysContentProps) {
                 className="w-full rounded-lg bg-background pl-8"
                 readOnly
               />
+              <div className="absolute bottom-1 right-2.5">
+                  <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant={"ghost"} onClick={() => onCopy(Target.URL)} size={"sm"} className="size-6 p-0.5">
+                      {urlCopied ? <CheckIcon className="size-4" /> : <Copy className="size-4" />}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {urlCopied ? "Copied" : "Copy"}
+                  </TooltipContent>
+                  </Tooltip>
+                </div>
             </div>
           </div>
 
