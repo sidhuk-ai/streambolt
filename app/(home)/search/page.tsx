@@ -14,9 +14,9 @@ export default async function SearchPage(props: SearchPageProps){
 
     return(
     <>
-        <div className="flex flex-col min-h-screen container p-4">
-            <h1 className="2xl:text-xl">Results for &quot;{q}&quot;</h1>
-            <main className="flex-1">
+        <div className="flex flex-col min-h-screen p-4">
+            <h1 className="md:text-xl">Results for &quot;{q}&quot;</h1>
+            <main className="flex-1 flex flex-col w-full items-center">
                 <Results query={q} />
             </main>
         </div>
