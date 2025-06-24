@@ -3,7 +3,19 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["images.unsplash.com",'via.placeholder.com',"fe4pzzl18g.ufs.sh"], // Add the external image domain here
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com'
+      },
+      {
+        hostname: 'via.placeholder.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'fe4pzzl18g.ufs.sh'
+      }
+    ]
   }
 };
 
