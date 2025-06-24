@@ -81,7 +81,7 @@ export function CreatorHeader({
     startTransistion(() => {
       onBlock(creator.id)
         .then((data) => {
-          toast.info(`You blocked ${data.blocked.name}.`);
+          toast.info(`You blocked ${data?.blocked.name}.`);
         })
         .catch((err) => {
           console.log(err);
