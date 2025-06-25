@@ -113,7 +113,7 @@ export default function Navbar() {
                 <>
                   <Button
                     asChild
-                    className="group transition-all duration-300 rounded-full ease-in-out transform hover:scale-105 hover:bg-primary/90 hover:shadow-lg"
+                    className="group transition-all not-md:hidden duration-300 rounded-full ease-in-out transform hover:scale-105 hover:bg-primary/90 hover:shadow-lg"
                   >
                     <Link href="/login">
                       Login
