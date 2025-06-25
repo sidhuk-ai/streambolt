@@ -24,6 +24,9 @@ model User {
   following     Follow[]  @relation("Following")
   follower      Follow[]  @relation("Followers")
   stream        Stream?
+
+  @@index([email])
+  @@index([username])
 }
 
 model Stream {
