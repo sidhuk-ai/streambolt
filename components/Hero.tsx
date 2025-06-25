@@ -78,32 +78,32 @@ export default function Hero() {
       );
   });
   return (
-    <section className="relative mx-auto overflow-hidden section-content">
-      <div className="content w-full py-12 md:py-24 lg:py-16 translate-y-10 opacity-0 flex justify-center items-center flex-col gap-y-2 size-full">
+    <section className="relative mx-auto md:overflow-hidden section-content">
+      <div className="content w-full md:py-4 lg:py-16 translate-y-10 opacity-0 flex justify-center items-center flex-col gap-y-2 size-full">
         <div className="mb-8">
-          <div className="relative z-10 w-full h-full flex flex-col 2xl:justify-center items-center translate-y-10 2xl:pt-0 md:pt-32 pt-24">
-            <div className="">
-              <h1 className="stream overflow-hidden 2xl:text-9xl md:text-[6.5rem] text-[3.3rem] font-bold 2xl:mb-0 mb-5">
+          <div className="relative z-10 w-full h-full flex flex-col 2xl:justify-center items-center translate-y-10 2xl:pt-0 md:pt-4">
+            {/* <div className=""> */}
+              <h1 className="stream overflow-hidden 2xl:text-9xl md:text-[5.8rem] text-[2.5rem] font-bold 2xl:mb-0 md:mb-5">
                 <span className="font-brand">Stream</span> Beyond
               </h1>
-            </div>
+            {/* </div> */}
             <div
               style={{ clipPath: "polygon(50% 0, 50% 0, 50% 100%, 50% 100%)" }}
               className="-rotate-3 z-10 border-[.5vw] border-background bg-[#1fd5f9] text-scroll px-2 w-fit"
             >
-              <h1 className="uppercase 2xl:text-9xl md:text-[6.5rem] text-[3.3rem] font-bold 2xl:px-[1.2vw] px-3 2xl:pb-[1vw] pb-5 2xl:py-0 py-3">
+              <h1 className="uppercase 2xl:text-9xl md:text-[6.5rem] text-[3rem] font-bold 2xl:px-[1.2vw] px-3 2xl:pb-[1vw] 2xl:py-0 py-2">
                 Boundaries
               </h1>
             </div>
-            <h1 className="bolt overflow-hidden 2xl:text-9xl md:text-[6.5rem] text-[3.3rem] font-bold 2xl:mb-0 mb-5">
+            <h1 className="bolt overflow-hidden 2xl:text-9xl md:text-[5.8rem] text-[2.5rem] font-bold 2xl:mb-0 mb-5">
               Create With <span className="font-brand">Bolt</span>
             </h1>
           </div>
         </div>
-        <div className="sub-heading my-6">
-          <p className="text-2xl text-center lg:max-w-2xl text-muted-foreground">
+        <div className="sub-heading mb-4 md:my-6">
+          <p className="md:text-2xl text-xl text-center lg:max-w-4xl text-muted-foreground">
             Spin up a live Ingress, link it to OBS or any RTMP-compatible
-            broadcaster, and start pushing high-quality, low-latency streams—no
+            broadcaster, and start pushing high-quality, low-latency streams - no
             extra configuration needed.
           </p>
         </div>
