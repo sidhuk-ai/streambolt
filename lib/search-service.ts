@@ -28,7 +28,8 @@ export const searchService = async (term: string) => {
                 OR: [
                     {
                         name: {
-                            contains: term
+                            contains: term,
+                            mode: 'insensitive'
                         }
                     },
                     {
@@ -36,12 +37,14 @@ export const searchService = async (term: string) => {
                             OR: [
                                 {
                                     username: {
-                                        contains: term
+                                        contains: term,
+                                        mode: 'insensitive'
                                     }
                                 },
                                 {
                                     name: {
-                                        contains: term
+                                        contains: term,
+                                        mode: 'insensitive'
                                     }
                                 }
                             ]
@@ -80,7 +83,8 @@ export const searchService = async (term: string) => {
                 OR: [
                     {
                         name: {
-                            contains: term
+                            contains: term,
+                            mode: 'insensitive'
                         }
                     },
                     {
@@ -88,12 +92,14 @@ export const searchService = async (term: string) => {
                             OR: [
                                 {
                                     username: {
-                                        contains: term
+                                        contains: term,
+                                        mode: 'insensitive'
                                     }
                                 },
                                 {
                                     name: {
-                                        contains: term
+                                        contains: term,
+                                        mode: 'insensitive'
                                     }
                                 }
                             ]
