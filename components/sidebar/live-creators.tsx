@@ -22,7 +22,7 @@ export function LiveCreators({ creators }: CreatorProps) {
   const pathname = usePathname();
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Live Now</SidebarGroupLabel>
+      <SidebarGroupLabel>Recommended users</SidebarGroupLabel>
       <SidebarMenu>
         {creators.map((creator) => (
           <SidebarMenuItem key={creator.id} className="w-full my-1.5">
