@@ -5,6 +5,7 @@ import React, { FormEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import queryString from "query-string";
 import { useRouter } from "next/navigation";
+import { Button } from "./button";
 
 const SearchBar = ({url}:{url:string}) => {
   const router = useRouter();
@@ -32,9 +33,11 @@ const SearchBar = ({url}:{url:string}) => {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Search streams..."
-        className="w-full rounded-md pl-8"
+        className="w-full rounded-md pr-8"
       />
-      <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+      <Button variant={"ghost"} size={"icon"} type="submit" className="absolute right-2.5 top-2.5 h-4 w-4 text-muted-foreground">
+        <Search />
+      </Button>
     </form>
   );
 };
