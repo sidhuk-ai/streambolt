@@ -1,5 +1,4 @@
 import * as React from "react";
-import { NavMain } from "@/components/sidebar/nav-main";
 import {
   Sidebar,
   SidebarContent,
@@ -30,7 +29,6 @@ export async function AppSidebar({
             ))}
           </div>
         )}
-        <NavMain />
       </SidebarContent>
     </Sidebar>
   );
