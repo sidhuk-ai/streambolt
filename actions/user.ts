@@ -24,7 +24,7 @@ export const register = async (formData: FormData) => {
     const hashedPassword = await hash(password,10);
     const fullName = `${firstName} ${lastName}`
     const username = `user-${Date.now().toString().slice(-5)}`
-    await prisma.user.create({
+    const user = await prisma.user.create({
         data:{
             name: fullName,
             username,
@@ -36,9 +36,12 @@ export const register = async (formData: FormData) => {
                     name: `${fullName}'s Stream`
                 }
             }
+        },
+        select:{
+            id: true
         }
     })
-    redirect('/login')
+    redirect(`/username?signature=${user.id}`);
 }
 
 export const login = async (formData: FormData) => {
@@ -164,36 +167,26 @@ export const getUserById = async (id:string) => {
     return user;
 }
 
-export const updateUserValues = async (formData: FormData) => {
-    try {
-        const self = await getSelf();
-
-        if(!self) return;
-
-        const validData = {
-            name: formData.get('name') as string,
-            username: formData.get('username') as string
+export const updateUsername = async (username: string, id: string) => {
+    const updateUser = await prisma.user.update({
+        where:{id},
+        data: {
+            username
+        },
+        select: {
+            name: true
         }
+    })
+    if(!updateUser) return null;
 
-        const updatedData = await prisma.user.update({
-            where:{
-                id: self.id
-            },
-            data: {
-                ...validData
-            },
-            select: {
-                id: true
-            }
-        })
+    return updateUser.name;
+}
 
-        if(!updatedData) return {msg: "Updation failed."}
-
-        revalidatePath('/dashboard/settings');
-        revalidatePath(`/stream/${updatedData.id}`);
-        revalidatePath(`/creator/${updatedData.id}`)
-        return;
-    } catch (error) {
-        return;
-    }
+export const checkUsernameAvailability = async (usernm: string) => {
+    const usernameAvailable = await prisma.user.findUnique({
+        where:{
+            username: usernm
+        }
+    })
+    return !usernameAvailable
 }
