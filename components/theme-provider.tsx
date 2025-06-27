@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { Loader2 } from "lucide-react";
 
 export function ThemeProvider({
   children,
@@ -23,8 +24,6 @@ export function ThemeProvider({
 
 export const GlobalLoading = () => {
   return (
-    <div className="h-dvh w-full flex items-center justify-center">
-      Loading...
-    </div>
+    <Loader2 className="size-6 animate-spin" />
   )
 }
