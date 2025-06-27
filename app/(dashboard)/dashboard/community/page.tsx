@@ -4,7 +4,7 @@ import { DataTable } from "@/app/(dashboard)/_components/data-table";
 import { getBlockedUsers } from "@/lib/block-service";
 import { format } from "date-fns";
 
-
+export const dynamic = "force-dynamic";
 export default async function CommunityPage() {
     const blockedUsers = await getBlockedUsers();
 

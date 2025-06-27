@@ -1,7 +1,7 @@
 import { getUserById } from "@/actions/user";
 import StreamPlayer from "@/components/StreamPlayer/stream-player";
 import { isFollowingCreator } from "@/lib/follow-service";
-
+// export const dynamic = "force-dynamic";
 export default async function StreamPage({
   params
 }:{
