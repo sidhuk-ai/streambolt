@@ -1,169 +1,195 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect, useCallback } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Check, X, Loader2, ArrowLeft, ArrowRight, User, Info } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { checkUsernameAvailability, updateUsername } from "@/actions/user"
-import { useSearchParams } from "next/navigation"
-import { toast } from "sonner"
-import Link from "next/link"
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
+import { useState, useEffect, useCallback } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Check,
+  X,
+  Loader2,
+  ArrowRight,
+  User,
+  Info,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { checkUsernameAvailability, updateUsername } from "@/actions/user";
+import { useSearchParams } from "next/navigation";
+import { toast } from "sonner";
+import Link from "next/link";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 interface UsernameSelectorProps {
-  onContinue: () => void
-  title?: string
-  subtitle?: string
+  onContinue: () => void;
+  title?: string;
+  subtitle?: string;
 }
 
-const validateUsername = (username: string): { isValid: boolean; error?: string } => {
+const validateUsername = (
+  username: string
+): { isValid: boolean; error?: string } => {
   if (!username) {
-    return { isValid: false }
+    return { isValid: false };
   }
 
   if (username.length <= 3) {
-    return { isValid: false, error: "Username must be at least 3 characters long" }
+    return {
+      isValid: false,
+      error: "Username must be at least 3 characters long",
+    };
   }
 
   if (username.length > 20) {
-    return { isValid: false, error: "Username must be 20 characters or less" }
+    return { isValid: false, error: "Username must be 20 characters or less" };
   }
 
   if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-    return { isValid: false, error: "Username can only contain letters, numbers, and underscores" }
+    return {
+      isValid: false,
+      error: "Username can only contain letters, numbers, and underscores",
+    };
   }
 
   if (/^[0-9]/.test(username)) {
-    return { isValid: false, error: "Username cannot start with a number" }
+    return { isValid: false, error: "Username cannot start with a number" };
   }
 
-  return { isValid: true }
-}
+  return { isValid: true };
+};
 
-type AvailabilityStatus = "idle" | "checking" | "available" | "taken" | "error"
+type AvailabilityStatus = "idle" | "checking" | "available" | "taken" | "error";
 
 export default function UsernameSelector({
   onContinue,
   title = "Choose Your Username",
   subtitle = "Pick a unique username that represents you on StreamBolt",
 }: UsernameSelectorProps) {
-  const [username, setUsername] = useState("")
-  const [availabilityStatus, setAvailabilityStatus] = useState<AvailabilityStatus>("idle")
-  const [validationError, setValidationError] = useState<string>("")
-  const [isChecking, setIsChecking] = useState(false)
+  const [username, setUsername] = useState("");
+  const [availabilityStatus, setAvailabilityStatus] =
+    useState<AvailabilityStatus>("idle");
+  const [validationError, setValidationError] = useState<string>("");
+  const [isChecking, setIsChecking] = useState(false);
   const param = useSearchParams();
-  const id = param.get('signature');
+  const id = param.get("signature");
 
   // Ye function Debounced hone wala hai
   const checkAvailability = useCallback(async (usernameToCheck: string) => {
     if (!usernameToCheck) {
-      setAvailabilityStatus("idle")
-      return
+      setAvailabilityStatus("idle");
+      return;
     }
 
-    const validation = validateUsername(usernameToCheck)
+    const validation = validateUsername(usernameToCheck);
     if (!validation.isValid) {
-      setValidationError(validation.error || "")
-      setAvailabilityStatus("error")
-      return
+      setValidationError(validation.error || "");
+      setAvailabilityStatus("error");
+      return;
     }
 
-    setValidationError("")
-    setAvailabilityStatus("checking")
-    setIsChecking(true)
+    setValidationError("");
+    setAvailabilityStatus("checking");
+    setIsChecking(true);
 
     try {
-      const isAvailable = await checkUsernameAvailability(usernameToCheck)
-      setAvailabilityStatus(isAvailable ? "available" : "taken")
+      const isAvailable = await checkUsernameAvailability(usernameToCheck);
+      setAvailabilityStatus(isAvailable ? "available" : "taken");
     } catch (error) {
-      setAvailabilityStatus("error")
-      setValidationError("Unable to check username availability")
+      setAvailabilityStatus("error");
+      setValidationError("Unable to check username availability");
     } finally {
-      setIsChecking(false)
+      setIsChecking(false);
     }
-  }, [])
+  }, []);
 
   // Debounce the username check
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      checkAvailability(username)
-    }, 600)
+      checkAvailability(username);
+    }, 600);
 
-    return () => clearTimeout(timeoutId)
-  }, [username, checkAvailability])
+    return () => clearTimeout(timeoutId);
+  }, [username, checkAvailability]);
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/[^a-zA-Z0-9_]/g, "")
-    setUsername(value)
-  }
+    const value = e.target.value.replace(/[^a-zA-Z0-9_]/g, "");
+    setUsername(value);
+  };
 
   const handleContinue = () => {
     if (availabilityStatus === "available" && username) {
-      updateUsername(username,id as string).then(() => {
-        onContinue()
-      }).catch(() => {
-        toast.error("Error ocuured while updating username.");
-      });
+      updateUsername(username, id as string)
+        .then(() => {
+          onContinue();
+        })
+        .catch(() => {
+          toast.error("Error ocuured while updating username.");
+        });
     }
-  }
+  };
 
   const getStatusIcon = () => {
     switch (availabilityStatus) {
       case "checking":
-        return <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+        return (
+          <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+        );
       case "available":
-        return <Check className="h-4 w-4 text-green-500" />
+        return <Check className="h-4 w-4 text-green-500" />;
       case "taken":
       case "error":
-        return <X className="h-4 w-4 text-red-500" />
+        return <X className="h-4 w-4 text-red-500" />;
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   const getStatusMessage = () => {
     if (validationError) {
-      return validationError
+      return validationError;
     }
 
     switch (availabilityStatus) {
       case "checking":
-        return "Checking availability..."
+        return "Checking availability...";
       case "available":
-        return "Username is available!"
+        return "Username is available!";
       case "taken":
-        return "Username is already taken"
+        return "Username is already taken";
       case "error":
-        return "Unable to check availability"
+        return "Unable to check availability";
       default:
-        return "Enter a username to check availability"
+        return "Enter a username to check availability";
     }
-  }
+  };
 
   const getStatusColor = () => {
     if (validationError) {
-      return "text-red-500"
+      return "text-red-500";
     }
 
     switch (availabilityStatus) {
       case "checking":
-        return "text-muted-foreground"
+        return "text-muted-foreground";
       case "available":
-        return "text-green-500"
+        return "text-green-500";
       case "taken":
       case "error":
-        return "text-red-500"
+        return "text-red-500";
       default:
-        return "text-muted-foreground"
+        return "text-muted-foreground";
     }
-  }
+  };
 
-  const isContinueEnabled = availabilityStatus === "available" && username.length > 0
+  const isContinueEnabled = availabilityStatus === "available" && username.length > 0;
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-background to-muted/20">
@@ -173,7 +199,9 @@ export default function UsernameSelector({
             <User className="h-6 w-6 text-primary" />
           </div>
           <CardTitle className="text-2xl font-bold">{title}</CardTitle>
-          <p className="text-muted-foreground text-sm leading-relaxed">{subtitle}</p>
+          <p className="text-muted-foreground text-sm leading-relaxed">
+            {subtitle}
+          </p>
         </CardHeader>
 
         <CardContent className="space-y-6">
@@ -190,18 +218,24 @@ export default function UsernameSelector({
                 onChange={handleUsernameChange}
                 className={cn(
                   "pr-10 transition-colors",
-                  availabilityStatus === "available" && "border-green-500 focus:border-green-500",
-                  (availabilityStatus === "taken" || availabilityStatus === "error") &&
-                    "border-red-500 focus:border-red-500",
+                  availabilityStatus === "available" &&
+                    "border-green-500 focus:border-green-500",
+                  (availabilityStatus === "taken" ||
+                    availabilityStatus === "error") &&
+                    "border-red-500 focus:border-red-500"
                 )}
                 maxLength={20}
                 autoComplete="username"
                 autoFocus
               />
-              <div className="absolute right-3 top-1/2 -translate-y-1/2">{getStatusIcon()}</div>
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                {getStatusIcon()}
+              </div>
             </div>
             <div className="flex items-center gap-2 min-h-[20px]">
-              <p className={cn("text-xs transition-colors", getStatusColor())}>{getStatusMessage()}</p>
+              <p className={cn("text-xs transition-colors", getStatusColor())}>
+                {getStatusMessage()}
+              </p>
             </div>
 
             <div className="text-xs text-muted-foreground space-y-1">
@@ -214,7 +248,11 @@ export default function UsernameSelector({
             </div>
           </div>
           <div className="flex gap-3 pt-4">
-            <Button onClick={handleContinue} disabled={!isContinueEnabled || isChecking} className="flex-1">
+            <Button
+              onClick={handleContinue}
+              disabled={!isContinueEnabled || isChecking}
+              className="flex-1"
+            >
               {isChecking ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -231,19 +269,29 @@ export default function UsernameSelector({
           <CardFooter className="justify-center gap-2 flex-col sm:flex-row">
             <div className="flex gap-1 items-center justify-center">
               <Popover>
-                <PopoverTrigger asChild className="border-b-2 bg-muted border-dotted cursor-pointer p-0.5">
+                <PopoverTrigger
+                  asChild
+                  className="border-b-2 bg-muted border-dotted cursor-pointer p-0.5"
+                >
                   <Info className="size-6 text-muted-foreground" />
                 </PopoverTrigger>
                 <PopoverContent className="w-fit text-sm bg-foreground text-background">
                   You will be given a random username.
                 </PopoverContent>
               </Popover>
-              <p className="text-muted-foreground text-sm">Want to skip this step.</p>
+              <p className="text-muted-foreground text-sm">
+                Want to skip this step.
+              </p>
             </div>
-            <Link href={'/login'} className="text-muted-foreground text-sm hover:underline hover:text-primary">Click here</Link>
+            <Link
+              href={"/login"}
+              className="text-muted-foreground text-sm hover:underline hover:text-primary"
+            >
+              Click here
+            </Link>
           </CardFooter>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

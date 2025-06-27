@@ -1,7 +1,6 @@
 "use client";
 
 import { MessagesSquare } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useChatSidebar } from "@/store/use-chat-sidebar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
