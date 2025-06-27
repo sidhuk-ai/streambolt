@@ -23,7 +23,6 @@ import {
 import { NavUser } from "./nav-user";
 import Link from "next/link";
 
-// This is sample data.
 const data = {
   navMain: [
     {

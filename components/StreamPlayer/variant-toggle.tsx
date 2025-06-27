@@ -1,5 +1,4 @@
 import { ChatVariant, useChatSidebar } from "@/store/use-chat-sidebar";
-import { MessageCircleIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 

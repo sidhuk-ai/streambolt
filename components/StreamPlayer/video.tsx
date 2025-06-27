@@ -5,7 +5,7 @@ import { ConnectionState, Track } from "livekit-client";
 import HostOffline from "./host-offline";
 import StreamLoading from "./stream-loading";
 import LiveVideo from "./live-video";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface VideoPageProps {
     hostName: string;

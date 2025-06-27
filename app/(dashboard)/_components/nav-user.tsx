@@ -5,7 +5,6 @@ import {
   Laptop,
   LogOut,
   Moon,
-  Sparkles,
   Sun,
 } from "lucide-react";
 
