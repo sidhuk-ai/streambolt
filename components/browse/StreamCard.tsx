@@ -39,14 +39,6 @@ export default function StreamCard({ stream }: StreamCardProps) {
     isLive,
   } = stream;
 
-  // Format viewer count
-  const formatViewers = (count: number) => {
-    if (count >= 1000) {
-      return `${(count / 1000).toFixed(1)}K`;
-    }
-    return count.toString();
-  };
-
   return (
     <Link href={`/stream/${id}`} className="group">
       <Card className="overflow-hidden transition-all hover:shadow-lg gap-0 bg-background border-0 py-0">

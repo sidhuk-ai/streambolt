@@ -10,6 +10,11 @@ export default async function ChatPage() {
     where: {
       userId: self?.id,
     },
+    select: {
+      isChatDelayed: true,
+      isChatEnabled: true,
+      isChatFollowersOnly: true
+    }
   });
   return (
     <div className="">

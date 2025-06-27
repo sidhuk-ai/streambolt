@@ -14,10 +14,10 @@ export default function UsernameSelectionPage() {
 
   return (
     <Suspense fallback={<Loading />}>
-    <UsernameSelector
-      onContinue={handleContinue}
-      title="Choose Your Username"
-      subtitle="Pick a unique username that represents you on StreamBolt"
+      <UsernameSelector
+        onContinue={handleContinue}
+        title="Choose Your Username"
+        subtitle="Pick a unique username that represents you on StreamBolt"
       />
     </Suspense>
   );
