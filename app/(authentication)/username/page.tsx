@@ -10,14 +10,9 @@ export default function UsernameSelectionPage() {
     router.push("/login");
   };
 
-  const handleBack = () => {
-    router.back();
-  };
-
   return (
     <UsernameSelector
       onContinue={handleContinue}
-      onBack={handleBack}
       title="Choose Your Username"
       subtitle="Pick a unique username that represents you on StreamBolt"
     />

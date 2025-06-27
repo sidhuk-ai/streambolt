@@ -6,16 +6,17 @@ import { useState, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Check, X, Loader2, ArrowLeft, ArrowRight, User } from "lucide-react"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Check, X, Loader2, ArrowLeft, ArrowRight, User, Info } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { checkUsernameAvailability, updateUsername } from "@/actions/user"
 import { useSearchParams } from "next/navigation"
 import { toast } from "sonner"
+import Link from "next/link"
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 
 interface UsernameSelectorProps {
   onContinue: () => void
-  onBack: () => void
   title?: string
   subtitle?: string
 }
@@ -48,7 +49,6 @@ type AvailabilityStatus = "idle" | "checking" | "available" | "taken" | "error"
 
 export default function UsernameSelector({
   onContinue,
-  onBack,
   title = "Choose Your Username",
   subtitle = "Pick a unique username that represents you on StreamBolt",
 }: UsernameSelectorProps) {
@@ -98,7 +98,7 @@ export default function UsernameSelector({
   }, [username, checkAvailability])
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/[^a-zA-Z0-9_]/g, "") // Remove invalid characters
+    const value = e.target.value.replace(/[^a-zA-Z0-9_]/g, "")
     setUsername(value)
   }
 
@@ -200,13 +200,10 @@ export default function UsernameSelector({
               />
               <div className="absolute right-3 top-1/2 -translate-y-1/2">{getStatusIcon()}</div>
             </div>
-
-            {/* Real-time feedback */}
             <div className="flex items-center gap-2 min-h-[20px]">
               <p className={cn("text-xs transition-colors", getStatusColor())}>{getStatusMessage()}</p>
             </div>
 
-            {/* Username requirements */}
             <div className="text-xs text-muted-foreground space-y-1">
               <p>Username requirements:</p>
               <ul className="list-disc list-inside space-y-0.5 ml-2">
@@ -216,14 +213,7 @@ export default function UsernameSelector({
               </ul>
             </div>
           </div>
-
-          {/* Action buttons */}
           <div className="flex gap-3 pt-4">
-            <Button variant="outline" onClick={onBack} className="flex-1">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
-            </Button>
-
             <Button onClick={handleContinue} disabled={!isContinueEnabled || isChecking} className="flex-1">
               {isChecking ? (
                 <>
@@ -238,6 +228,20 @@ export default function UsernameSelector({
               )}
             </Button>
           </div>
+          <CardFooter className="justify-center gap-2 flex-col sm:flex-row">
+            <div className="flex gap-1 items-center justify-center">
+              <Popover>
+                <PopoverTrigger asChild className="border-b-2 bg-muted border-dotted cursor-pointer p-0.5">
+                  <Info className="size-6 text-muted-foreground" />
+                </PopoverTrigger>
+                <PopoverContent className="w-fit text-sm bg-foreground text-background">
+                  You will be given a random username.
+                </PopoverContent>
+              </Popover>
+              <p className="text-muted-foreground text-sm">Want to skip this step.</p>
+            </div>
+            <Link href={'/login'} className="text-muted-foreground text-sm hover:underline hover:text-primary">Click here</Link>
+          </CardFooter>
         </CardContent>
       </Card>
     </div>
