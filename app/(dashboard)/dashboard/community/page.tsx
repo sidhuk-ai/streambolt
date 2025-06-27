@@ -1,6 +1,6 @@
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import { columns } from "../../_components/columns";
-import { DataTable } from "../../_components/data-table";
+import { columns } from "@/app/(dashboard)/_components/columns";
+import { DataTable } from "@/app/(dashboard)/_components/data-table";
 import { getBlockedUsers } from "@/lib/block-service";
 import { format } from "date-fns";
 

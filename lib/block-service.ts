@@ -126,7 +126,16 @@ export const getBlockedUsers = async () => {
             blockerId: self?.id
         },
         include: {
-            blocked: true
+            blocked: {
+                select:{
+                    id:true,
+                    name: true,
+                    username: true,
+                    imageUrl: true,
+                    email: true,
+                    createdAt: true
+                }
+            }
         }
     });
 

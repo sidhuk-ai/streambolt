@@ -3,8 +3,6 @@ import { Metadata } from "next";
 import { ReactNode } from "react";
 import { AppSidebar } from "./_components/app-sidebar";
 import Header from "./_components/Header";
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Account – Streambolt",
@@ -24,10 +22,6 @@ export const metadata: Metadata = {
 export default async function DashboardLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
-  const self = await auth();
-  if(!self?.user) {
-    redirect('/login');
-  }
   return (
     <>
       <SidebarProvider defaultOpen={true}>

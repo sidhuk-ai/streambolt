@@ -1,8 +1,9 @@
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import { getSelf } from "@/actions/user";
 import { prisma } from "@/lib/db";
-import ToggleCard from "../../_components/toggle-card";
+import ToggleCard from "@/app/(dashboard)/_components/toggle-card";
 
+export const dynamic = "force-dynamic";
 export default async function ChatPage() {
   const self = await getSelf();
 

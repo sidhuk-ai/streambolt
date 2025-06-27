@@ -78,7 +78,7 @@ export const getSelf = async () => {
         })
 
         return user;
-    } catch (error) {
+    } catch {
         throw new Error("User didn't logged in.")
     }
 }
@@ -123,7 +123,7 @@ export const getAllCreators = async () => {
                 }
             }
         })
-    } catch (error) {
+    } catch {
         someCreators = await prisma.user.findMany({
             include:{
                 stream:{

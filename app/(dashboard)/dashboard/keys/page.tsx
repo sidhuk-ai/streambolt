@@ -3,7 +3,7 @@ import KeysContent from "@/app/(dashboard)/_components/keys-content";
 import { prisma } from "@/lib/db";
 import { getSelf } from "@/actions/user";
 import { redirect } from "next/navigation";
-
+export const dynamic = "force-dynamic";
 export default async function KeysPage() {
     const self = await getSelf();
     if(!self) redirect('/login');
