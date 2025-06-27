@@ -102,7 +102,7 @@ export default function UsernameSelector({
     try {
       const isAvailable = await checkUsernameAvailability(usernameToCheck);
       setAvailabilityStatus(isAvailable ? "available" : "taken");
-    } catch (error) {
+    } catch {
       setAvailabilityStatus("error");
       setValidationError("Unable to check username availability");
     } finally {

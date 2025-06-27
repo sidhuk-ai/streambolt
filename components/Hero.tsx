@@ -110,7 +110,7 @@ export default function Hero() {
         <div className="button-group">
           <Link href={"/browse"}>
             <button className="Btn-Container">
-              <span className="text capitalize">let's go!</span>
+              <span className="text capitalize">let&apos;s go!</span>
               <span className="icon-Container">
                 <svg
                   width="16"

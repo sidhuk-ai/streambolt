@@ -106,7 +106,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  You haven't blocked anyone.
+                  You haven&apos;t blocked anyone.
                 </TableCell>
               </TableRow>
             )}

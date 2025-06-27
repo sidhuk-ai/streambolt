@@ -112,32 +112,32 @@ export default function DashboardOverview() {
   )
 }
 
-function ViewerChart() {
-  // This is a simplified chart component
-  // In a real application, you would use a library like recharts or chart.js
-  const data = [
-    10, 15, 8, 12, 22, 27, 24, 19, 23, 28, 25, 31, 35, 30, 40, 43, 36, 32, 38, 42, 45, 50, 48, 52, 56, 54, 60, 58, 65,
-    62,
-  ]
+// function ViewerChart() {
+//   // This is a simplified chart component
+//   // In a real application, you would use a library like recharts or chart.js
+//   const data = [
+//     10, 15, 8, 12, 22, 27, 24, 19, 23, 28, 25, 31, 35, 30, 40, 43, 36, 32, 38, 42, 45, 50, 48, 52, 56, 54, 60, 58, 65,
+//     62,
+//   ]
 
-  const max = Math.max(...data)
+//   const max = Math.max(...data)
 
-  return (
-    <div className="h-[200px] w-full">
-      <div className="flex h-full items-end gap-[3px]">
-        {data.map((value, i) => (
-          <div
-            key={i}
-            className="bg-primary/90 hover:bg-primary rounded-t w-full transition-all"
-            style={{
-              height: `${(value / max) * 100}%`,
-            }}
-          >
-            <div className="opacity-0 hover:opacity-100 transition-opacity text-xs text-center -mt-6">{value}K</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
+//   return (
+//     <div className="h-[200px] w-full">
+//       <div className="flex h-full items-end gap-[3px]">
+//         {data.map((value, i) => (
+//           <div
+//             key={i}
+//             className="bg-primary/90 hover:bg-primary rounded-t w-full transition-all"
+//             style={{
+//               height: `${(value / max) * 100}%`,
+//             }}
+//           >
+//             <div className="opacity-0 hover:opacity-100 transition-opacity text-xs text-center -mt-6">{value}K</div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   )
+// }
 

@@ -189,8 +189,8 @@ export default function SignUpPage() {
           <div className="absolute bottom-0 left-0 p-10 max-w-md">
             <blockquote className="space-y-2">
               <p className="text-lg">
-                "StreamBolt has completely transformed how I connect with my
-                audience. The platform is intuitive and powerful."
+                &quot;StreamBolt has completely transformed how I connect with my
+                audience. The platform is intuitive and powerful.&quot;
               </p>
               <footer className="text-sm text-muted-foreground">
                 {" "}

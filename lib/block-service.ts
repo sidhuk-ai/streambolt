@@ -25,7 +25,7 @@ export const isBlockedByUser = async (id:string) => {
             }
         })
         return !!isBlocked;
-    } catch (error) {
+    } catch {
         return false;
     }
 }
