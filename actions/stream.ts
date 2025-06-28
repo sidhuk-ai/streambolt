@@ -1,8 +1,8 @@
 "use server";
 import { prisma } from "@/lib/db";
-import { Stream } from "@/lib/generated/prisma";
 import { getSelf } from "./user";
 import { revalidatePath } from "next/cache";
+import { Stream } from "@prisma/client";
 
 export const updateStream = async (values: Partial<Stream>) => {
     // TODO: Rewrite whole logic

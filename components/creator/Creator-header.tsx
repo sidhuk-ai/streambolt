@@ -23,7 +23,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { onBlock, onUnblock } from "@/actions/block";
-import { Prisma } from "@/lib/generated/prisma";
+import { Prisma } from "@prisma/client";
 
 type Creator = Prisma.UserGetPayload<{
   select: {

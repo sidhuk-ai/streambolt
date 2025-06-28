@@ -1,7 +1,7 @@
 "use client";
 
 import { useViewerToken } from "@/hooks/use-viewer-token";
-import { Prisma } from "@/lib/generated/prisma";
+import { Prisma } from "@prisma/client";
 import { LiveKitRoom } from "@livekit/components-react";
 import Video, { VideoSkeleton } from "./video";
 import { useChatSidebar } from "@/store/use-chat-sidebar";

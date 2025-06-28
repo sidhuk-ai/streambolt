@@ -14,8 +14,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { User } from "@/lib/generated/prisma";
 import { AtSign, Link, Mail, MapPin, Phone, User as User2 } from "lucide-react";
+import { User } from "@prisma/client";
 
 interface SettingProps {
   user: Partial<User>;

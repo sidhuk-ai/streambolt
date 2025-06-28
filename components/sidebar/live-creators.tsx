@@ -11,7 +11,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User } from "@/lib/generated/prisma";
+import { User } from "@prisma/client";
 import { cn } from "@/lib/utils";
 
 interface CreatorProps {

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import CreatorCard from "@/components/following/CreatorCard";
 import { getFollowedCreators } from "@/actions/follow";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Prisma } from "@/lib/generated/prisma";
+import { Prisma } from "@prisma/client";
 
 type Following = Prisma.UserGetPayload<{
   select:{
