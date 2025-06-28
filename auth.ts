@@ -9,18 +9,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       name: "credentials",
       authorize: async (credentials) => {
         try {
-          const email = credentials.email as string;
-          const password = credentials.password as string;
+          const email = credentials?.email as string;
+          const password = credentials?.password as string;
 
-          if(!email || !password) throw new Error("Email or Password filed is empty.");
+          if(!email || !password) return null;
 
           const user = await prisma.user.findUnique({
             where:{email}
           });
-          if(!user) throw new Error("No user found with the specified email.");
+          if(!user) return null;
 
-          const matchPassword = await compare(password,user.password as string);
-          if(!matchPassword) throw new Error("Password doesn't match.");
+          const matchPassword = await compare(password,user.password);
+          if(!matchPassword) return null;
 
           return {
             id: user.id,
@@ -28,8 +28,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: user.email,
             image: user.imageUrl
           }
-        } catch {
-          throw new Error("Some error occured while signing in through credentials.")
+        } catch (err) {
+          console.error("Error while signing in through credentials",err)
+          return null;
         }
       }
     })
@@ -56,5 +57,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   pages: {
     signIn: "/login"
+  },
+  session: {
+    strategy: 'jwt'
   }
 })
